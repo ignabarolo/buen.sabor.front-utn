@@ -1,11 +1,11 @@
-import * as React from 'react';
-import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
-import { Link } from 'react-router-dom';
+import * as React from "react";
+import Card from "@mui/material/Card";
+import CardActions from "@mui/material/CardActions";
+import CardContent from "@mui/material/CardContent";
+import CardMedia from "@mui/material/CardMedia";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+import { Link } from "react-router-dom";
 
 interface Content {
   url: string;
@@ -16,12 +16,8 @@ interface Content {
 const InicioCard: React.FC<{ content: Content }> = ({ content }) => {
   const { url, title, content: cardContent } = content;
   return (
-    <Card sx={{ maxWidth: 345, my: 2  }}>
-      <CardMedia
-        sx={{ height: 140 }}
-        image={url}
-        title={title}
-      />
+    <Card sx={{ maxWidth: 345, my: 2 }}>
+      <CardMedia sx={{ height: 140 }} image={url} title={title} />
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
           {title}
@@ -31,13 +27,20 @@ const InicioCard: React.FC<{ content: Content }> = ({ content }) => {
         </Typography>
       </CardContent>
       <CardActions>
-      <Link to={`/${title}`} style={{ textDecoration: 'none', color: 'inherit' }} >
-         <Button sx={{color: '#FB6376'}} size="small">Ver más</Button>
-      </Link>
-        <Button sx={{color: '#FB6376'}} size="small">Crear</Button>
+        <Link
+          to={`/${title}`}
+          style={{ textDecoration: "none", color: "inherit" }}
+        >
+          <Button sx={{ color: "#FB6376" }} size="small">
+            Ver más
+          </Button>
+        </Link>
+        <Button sx={{ color: "#FB6376" }} size="small">
+          Crear
+        </Button>
       </CardActions>
     </Card>
   );
-}
+};
 
 export default InicioCard;
