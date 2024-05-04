@@ -1,4 +1,4 @@
-import "./App.css";
+import "@coreui/coreui/dist/css/coreui.min.css";
 
 function App() {
   return (
