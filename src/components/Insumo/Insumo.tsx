@@ -19,7 +19,9 @@ interface Column {
 
 const Insumo = () => {
   const dispatch = useAppDispatch();
-  const globalArticulosInsumos = useAppSelector((state) => state.articuloInsumo.articuloInsumo);
+  const globalArticulosInsumos = useAppSelector(
+    (state) => state.articuloInsumo.articuloInsumo
+  );
 
   const [filteredData, setFilteredData] = useState<Row[]>([]);
 
@@ -56,28 +58,50 @@ const Insumo = () => {
         />
       ),
     },
-    { id: "denominacion", label: "Nombre", renderCell: (rowData) => <>{rowData.denominacion}</> },
-    { id: "precioCompra", label: "Precio de compra", renderCell: (rowData) => <>{rowData.precioCompra}</> },
-    { id: "precioVenta", label: "Precio de Venta", renderCell: (rowData) => <>{rowData.precioVenta}</> },
-    { id: "stock", label: "Stock", renderCell: (rowData) => <>{rowData.stockActual}</> },
+    {
+      id: "denominacion",
+      label: "Nombre",
+      renderCell: (rowData) => <>{rowData.denominacion}</>,
+    },
+    {
+      id: "precioCompra",
+      label: "Precio de compra",
+      renderCell: (rowData) => <>{rowData.precioCompra}</>,
+    },
+    {
+      id: "precioVenta",
+      label: "Precio de Venta",
+      renderCell: (rowData) => <>{rowData.precioVenta}</>,
+    },
+    {
+      id: "stock",
+      label: "Stock",
+      renderCell: (rowData) => <>{rowData.stockActual}</>,
+    },
     {
       id: "elaboracion",
       label: "¿Es para elaborar?",
       renderCell: (rowData) => <>{rowData.esParaElaborar ? "Sí" : "No"}</>,
     },
   ];
-  
 
   return (
     <Box component="main" sx={{ flexGrow: 1, pl: 9, pt: 4 }}>
       <Container>
-        <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", my: 1 }}>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            my: 1,
+          }}
+        >
           <Typography variant="h5" gutterBottom>
             Insumos
           </Typography>
           <Button
             sx={{
-              bgcolor: "#fb6376",
+              bgcolor: "#ff6600",
               "&:hover": {
                 bgcolor: "#d73754",
               },
@@ -88,7 +112,7 @@ const Insumo = () => {
             Insumo
           </Button>
         </Box>
-        <Box sx={{mt:2 }}>
+        <Box sx={{ mt: 2 }}>
           <SearchBar onSearch={handleSearch} />
         </Box>
         <TableComponent data={filteredData} columns={columns} />
