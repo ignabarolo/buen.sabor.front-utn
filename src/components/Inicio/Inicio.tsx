@@ -5,21 +5,21 @@ import Barra from "./Barra";
 import Pie from "./Pie";
 
 const productosContent = {
-  url: "https://images.unsplash.com/photo-1615996001375-c7ef13294436?q=80&w=1471&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  url: "https://w6h5a5r4.rocketcdn.me/wp-content/uploads/2019/06/pizza-con-chorizo-jamon-y-queso-1080x671.jpg",
   title: "Productos",
   content:
     "Añade nuevos platos o actualiza los precios para mejorar la experiencia de tus clientes.",
 };
 
 const empresasContent = {
-  url: "https://images.unsplash.com/photo-1524414139215-35c99f80112d?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  url: "http://www.aikonerp.com.ar/blog/wp-content/uploads/2016/10/empresa-y-sucursal-750x410.png",
   title: "Empresas",
   content:
     "Agrega, actualiza o elimina información sobre tus empresas asociadas.",
 };
 
 const promocionesContent = {
-  url: "https://images.unsplash.com/photo-1581495701295-13b43b0f4ae8?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  url: "https://www.grandespymes.com.ar/wp-content/uploads/2020/07/promociones.jpg",
   title: "Promociones",
   content:
     "Personaliza tus ofertas y haz que destaquen para que tus clientes no puedan resistirse.",
@@ -35,39 +35,46 @@ const Inicio: React.FC = () => {
     <Box component="main" sx={{ flexGrow: 1, pl: 9, pt: 4 }}>
       <Container>
         <Typography component="h1" variant="h5" color="initial">
-          Bienvenido
+          Bienvenidos
         </Typography>
-        {/*        
-                <Grid container spacing={3} sx={{ py: 2, alignContent: 'center' , justifyContent: 'center' }}>
-                    <Grid item xs={12} md={6}>
-                        <ChartCard title="Gráfico de Barras">
-                            <Barra />
-                        </ChartCard>
-                    </Grid>
-                    <Grid item xs={12} md={6}>
-                        <ChartCard title="Gráfico de Pastel">
-                            <Pie />
-                        </ChartCard>
-                    </Grid>
-                </Grid>
-                <Grid container spacing={3} sx={{ alignContent: 'center' , justifyContent: 'center'}}>
-                    <Grid item xs={12} md={4}>
-                        <Box sx={cardStyle}>
-                            <InicioCard content={productosContent} />
-                        </Box>
-                    </Grid>
-                    <Grid item xs={12} md={4}>
-                        <Box sx={cardStyle}>
-                            <InicioCard content={empresasContent} />
-                        </Box>
-                    </Grid>
-                    <Grid item xs={12} md={4}>
-                        <Box sx={cardStyle}>
-                            <InicioCard content={promocionesContent} />
-                        </Box>
-                    </Grid>
-                </Grid>
-    */}
+
+        <Grid
+          container
+          spacing={3}
+          sx={{ py: 2, alignContent: "center", justifyContent: "center" }}
+        >
+          <Grid item xs={12} md={6}>
+            <ChartCard title="Gráfico de Pastel">
+              <Pie />
+            </ChartCard>
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <ChartCard title="Gráfico de Barras">
+              <Barra />
+            </ChartCard>
+          </Grid>
+        </Grid>
+        <Grid
+          container
+          spacing={3}
+          sx={{ alignContent: "center", justifyContent: "center" }}
+        >
+          <Grid item xs={12} md={4}>
+            <Box sx={cardStyle}>
+              <InicioCard content={empresasContent} />
+            </Box>
+          </Grid>
+          <Grid item xs={12} md={4}>
+            <Box sx={cardStyle}>
+              <InicioCard content={productosContent} />
+            </Box>
+          </Grid>
+          <Grid item xs={12} md={4}>
+            <Box sx={cardStyle}>
+              <InicioCard content={promocionesContent} />
+            </Box>
+          </Grid>
+        </Grid>
       </Container>
     </Box>
   );

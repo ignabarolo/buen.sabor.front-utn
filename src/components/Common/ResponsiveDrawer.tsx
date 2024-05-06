@@ -136,7 +136,7 @@ export default function ResponsiveDrawer() {
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
-      <AppBar position="fixed" open={open} sx={{ bgcolor: "#ff6600" }}>
+      <AppBar position="fixed" open={open}sx={{bgcolor: '#F77610', color:'#fff'}}>
         <Toolbar>
           <IconButton
             color="inherit"
@@ -152,7 +152,7 @@ export default function ResponsiveDrawer() {
           </IconButton>
 
           <Typography variant="h6" noWrap component="div">
-            <FastfoodIcon /> Buen Sabor
+            <FastfoodIcon />  El buen sabor 
           </Typography>
 
           {/* User Avatar and Menu */}
@@ -171,17 +171,10 @@ export default function ResponsiveDrawer() {
             open={Boolean(anchorEl)}
             onClose={handleMenuClose}
           >
-            <MenuItem onClick={handleMenuClose}>
-              {" "}
-              <AccountBoxIcon sx={{ pr: 1 }} /> Perfil
-            </MenuItem>
-            <MenuItem onClick={handleMenuClose}>
-              <SettingsIcon sx={{ pr: 1 }} /> Ajustes
-            </MenuItem>
-            <Divider />
-            <MenuItem onClick={handleMenuClose}>
-              <LogoutIcon sx={{ pr: 1 }} /> Cerrar Sesión
-            </MenuItem>
+            <MenuItem onClick={handleMenuClose}> <AccountBoxIcon sx={{pr: 1, color:'#F77610'}}/>  Perfil</MenuItem>
+            <MenuItem onClick={handleMenuClose}><SettingsIcon sx={{pr: 1, color:'#F77610'}}/>  Ajustes</MenuItem>
+            <Divider/>
+            <MenuItem onClick={handleMenuClose}><LogoutIcon sx={{pr: 1, color:'#F77610'}} />  Cerrar Sesión</MenuItem>
           </Menu>
         </Toolbar>
       </AppBar>
@@ -197,42 +190,51 @@ export default function ResponsiveDrawer() {
         </DrawerHeader>
         <Divider />
         <List>
-          {["Inicio", "Empresas", "Productos", "Promociones", "Insumos"].map(
-            (text, index) => (
-              <React.Fragment key={text}>
-                <ListItem disablePadding sx={{ display: "block" }}>
-                  <Link
-                    to={text === "Inicio" ? "/" : `/${text.toLowerCase()}`}
-                    style={{ textDecoration: "none", color: "inherit" }}
+          {['Inicio' ,'Empresas', 'Productos', 'Promociones', 'Insumos'].map((text, index) => (
+            <React.Fragment key={text}>
+              <ListItem disablePadding sx={{ display: 'block'}}>
+                <Link to={text === 'Inicio' ? '/' : `/${text.toLowerCase()}`} style={{ textDecoration: 'none', color: 'black' }}>
+                  <ListItemButton
+                    onClick={text === 'Productos' ? handleSublinksToggle : undefined}
+                    sx={{
+                      minHeight: 48,
+                      justifyContent: open ? 'initial' : 'center',
+                      px: 2.5,
+                    }}
                   >
                     <ListItemButton
                       onClick={
                         text === "Productos" ? handleSublinksToggle : undefined
                       }
                       sx={{
-                        minHeight: 48,
-                        justifyContent: open ? "initial" : "center",
-                        px: 2.5,
+                        minWidth: 0,
+                        mr: open ? 3 : 'auto',
+                        justifyContent: 'center',
+                        color:'#F77610'
                       }}
                     >
-                      <ListItemIcon
-                        sx={{
-                          minWidth: 0,
-                          mr: open ? 3 : "auto",
-                          justifyContent: "center",
-                        }}
-                      >
-                        {index === 0 ? (
-                          <BarChartIcon />
-                        ) : index === 1 ? (
-                          <BusinessIcon />
-                        ) : index === 2 ? (
-                          <CategoryIcon sx={{ pl: 1 }} />
-                        ) : index === 3 ? (
-                          <LocalOfferIcon />
-                        ) : index === 4 ? (
-                          <InventoryIcon />
-                        ) : null}
+                      {index === 0 ? <BarChartIcon/>:
+                        index === 1 ?  <BusinessIcon />  :
+                          index === 2 ? <CategoryIcon sx={{pl: 1}}/> :
+                            index === 3 ? <LocalOfferIcon />  : 
+                              index === 4 ? <InventoryIcon /> : null}
+                    </ListItemIcon>
+                    <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
+                    {text === 'Productos' && (
+                      <IconButton onClick={handleSublinksToggle}>
+                        <ExpandMoreIcon/>
+                      </IconButton>
+                    )}
+                  </ListItemButton>
+                </Link>
+              </ListItem>
+              {text === 'Productos' && (
+                <Collapse in={openSublinks} timeout="auto" unmountOnExit>
+                  <List component="div" disablePadding>
+                  <Link to={'/categorias'} style={{ textDecoration: 'none', color: 'inherit' }} >
+                    <ListItemButton sx={{ pl: open ? 4 : 2.7  , justifyContent: 'center' }}>
+                      <ListItemIcon sx={{ justifyContent: 'center', color:'#F77610' }}>
+                        <InventoryIcon />
                       </ListItemIcon>
                       <ListItemText
                         primary={text}

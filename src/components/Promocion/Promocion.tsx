@@ -129,9 +129,9 @@ const Promocion: React.FC = () => {
           </Typography>
           <Button
             sx={{
-              bgcolor: "#ff6600",
+              bgcolor: "#F77610",
               "&:hover": {
-                bgcolor: "#d73754",
+                bgcolor: "grey",
               },
             }}
             variant="contained"
