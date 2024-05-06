@@ -1,4 +1,4 @@
-import Imagenes from "./IImagenes";
+import Imagenes from "./Imagenes";
 import UnidadMedida from "./UnidadMedida";
 
 interface IArticuloInsumo {
