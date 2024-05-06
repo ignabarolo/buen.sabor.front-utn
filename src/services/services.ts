@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
-import ArticuloManufacturado from '../types/ArticuloManufacturado'; 
+import ArticuloManufacturado from '../types/ArticuloManufacturado';
 import ArticuloInsumo from '../types/ArticuloInsumo';
 import Promocion from '../types/Promocion';
 
