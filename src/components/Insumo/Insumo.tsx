@@ -101,9 +101,9 @@ const Insumo = () => {
           </Typography>
           <Button
             sx={{
-              bgcolor: "#F77610",
+              bgcolor: "#ff6600",
               "&:hover": {
-                bgcolor: "grey",
+                bgcolor: "black",
               },
             }}
             variant="contained"

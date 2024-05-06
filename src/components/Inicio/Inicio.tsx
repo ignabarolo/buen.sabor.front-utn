@@ -5,7 +5,7 @@ import Barra from "./Barra";
 import Pie from "./Pie";
 
 const productosContent = {
-  url: "https://w6h5a5r4.rocketcdn.me/wp-content/uploads/2019/06/pizza-con-chorizo-jamon-y-queso-1080x671.jpg",
+  url: "https://images.unsplash.com/photo-1615996001375-c7ef13294436?q=80&w=1471&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
   title: "Productos",
   content:
     "Añade nuevos platos o actualiza los precios para mejorar la experiencia de tus clientes.",
@@ -44,13 +44,13 @@ const Inicio: React.FC = () => {
           sx={{ py: 2, alignContent: "center", justifyContent: "center" }}
         >
           <Grid item xs={12} md={6}>
-            <ChartCard title="Gráfico de Pastel">
-              <Pie />
+            <ChartCard title="Gráfico de Barras">
+              <Barra />
             </ChartCard>
           </Grid>
           <Grid item xs={12} md={6}>
-            <ChartCard title="Gráfico de Barras">
-              <Barra />
+            <ChartCard title="Gráfico de Pastel">
+              <Pie />
             </ChartCard>
           </Grid>
         </Grid>
@@ -61,12 +61,12 @@ const Inicio: React.FC = () => {
         >
           <Grid item xs={12} md={4}>
             <Box sx={cardStyle}>
-              <InicioCard content={empresasContent} />
+              <InicioCard content={productosContent} />
             </Box>
           </Grid>
           <Grid item xs={12} md={4}>
             <Box sx={cardStyle}>
-              <InicioCard content={productosContent} />
+              <InicioCard content={empresasContent} />
             </Box>
           </Grid>
           <Grid item xs={12} md={4}>
