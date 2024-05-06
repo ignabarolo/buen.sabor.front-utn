@@ -1,12 +1,20 @@
 import React, { useEffect, useState } from "react";
-import { Box, Typography, Button, Container, List, ListItem, ListItemText } from "@mui/material";
+import {
+  Box,
+  Typography,
+  Button,
+  Container,
+  List,
+  ListItem,
+  ListItemText,
+} from "@mui/material";
 import { Add } from "@mui/icons-material";
-import { useAppDispatch, useAppSelector } from "../../hooks/redux";
-import { getPromociones } from "../../services/services";
-import { setPromocion } from "../../redux/slices/Promocion";
-import TableComponent from "../Table/Table";
-import SearchBar from "../Common/SearchBar";
-import PromocionType from "../../types/Promocion";
+import { useAppDispatch, useAppSelector } from "../../../hooks/redux";
+import { getPromociones } from "../../../services/services";
+import { setPromocion } from "../../../redux/slices/Promocion";
+import TableComponent from "../../ui/Table/Table";
+import SearchBar from "../../Common/SearchBar";
+import PromocionType from "../../../types/Promocion";
 
 interface Row {
   [key: string]: any;
@@ -59,13 +67,33 @@ const Promocion: React.FC = () => {
         />
       ),
     },
-    { id: "denominacion", label: "Nombre", renderCell: (rowData) => <>{rowData.denominacion}</> },
-    { id: "fechaDesde", label: "Desde", renderCell: (rowData) => <>{rowData.fechaDesde}</> },
-    { id: "fechaHasta", label: "Hasta", renderCell: (rowData) => <>{rowData.fechaHasta}</> },
+    {
+      id: "denominacion",
+      label: "Nombre",
+      renderCell: (rowData) => <>{rowData.denominacion}</>,
+    },
+    {
+      id: "fechaDesde",
+      label: "Desde",
+      renderCell: (rowData) => <>{rowData.fechaDesde}</>,
+    },
+    {
+      id: "fechaHasta",
+      label: "Hasta",
+      renderCell: (rowData) => <>{rowData.fechaHasta}</>,
+    },
     // { id: "horaDesde", label: "Hora Desde",  renderCell: (rowData) => <>{rowData.horaDesde}</> },
     // { id: "horaHasta", label: "Hora Hasta", renderCell: (rowData) => <>{rowData.horaHasta}</>  },
-    { id: "descripcionDescuento", label: "Descripción Descuento", renderCell: (rowData) => <>{rowData.descripcionDescuento}</> },
-    { id: "precioPromocional", label: "Precio Promocional", renderCell: (rowData) => <>{rowData.precioPromocional}</> },
+    {
+      id: "descripcionDescuento",
+      label: "Descripción Descuento",
+      renderCell: (rowData) => <>{rowData.descripcionDescuento}</>,
+    },
+    {
+      id: "precioPromocional",
+      label: "Precio Promocional",
+      renderCell: (rowData) => <>{rowData.precioPromocional}</>,
+    },
     // { id: "tipoPromocion", label: "Tipo Promoción", renderCell: (rowData) => <>{rowData.tipoPromocion}</>  },
     // {
     //   id: "articulos",
@@ -88,7 +116,14 @@ const Promocion: React.FC = () => {
   return (
     <Box component="main" sx={{ flexGrow: 1, pl: 9, pt: 4 }}>
       <Container>
-        <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", my: 1 }}>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            my: 1,
+          }}
+        >
           <Typography variant="h5" gutterBottom>
             Promociones
           </Typography>
@@ -113,6 +148,5 @@ const Promocion: React.FC = () => {
     </Box>
   );
 };
-
 
 export default Promocion;

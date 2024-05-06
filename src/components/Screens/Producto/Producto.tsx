@@ -1,11 +1,11 @@
-import  { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Box, Typography, Button, Container } from "@mui/material";
 import { Add } from "@mui/icons-material";
-import { useAppDispatch, useAppSelector } from "../../hooks/redux";
-import { getArticulosManufacturados } from "../../services/services";
-import { setArticuloManufacturado } from "../../redux/slices/articuloManufacturado";
-import TableComponent from "../Table/Table";
-import SearchBar from "../Common/SearchBar";
+import { useAppDispatch, useAppSelector } from "../../../hooks/redux";
+import { getArticulosManufacturados } from "../../../services/services";
+import { setArticuloManufacturado } from "../../../redux/slices/articuloManufacturado";
+import TableComponent from "../../ui/Table/Table";
+import SearchBar from "../../Common/SearchBar";
 
 interface Row {
   [key: string]: any;
@@ -59,9 +59,21 @@ const Producto = () => {
         />
       ),
     },
-    { id: "denominacion", label: "Nombre", renderCell: (rowData) => <>{rowData.denominacion}</> },
-    { id: "precioVenta", label: "Precio", renderCell: (rowData) => <>{rowData.precioVenta}</> },
-    { id: "descripcion", label: "Descripción", renderCell: (rowData) => <>{rowData.descripcion}</> },
+    {
+      id: "denominacion",
+      label: "Nombre",
+      renderCell: (rowData) => <>{rowData.denominacion}</>,
+    },
+    {
+      id: "precioVenta",
+      label: "Precio",
+      renderCell: (rowData) => <>{rowData.precioVenta}</>,
+    },
+    {
+      id: "descripcion",
+      label: "Descripción",
+      renderCell: (rowData) => <>{rowData.descripcion}</>,
+    },
     {
       id: "tiempoEstimadoMinutos",
       label: "Tiempo estimado en minutos",
@@ -72,7 +84,14 @@ const Producto = () => {
   return (
     <Box component="main" sx={{ flexGrow: 1, pl: 9, pt: 4 }}>
       <Container>
-        <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", my: 1 }}>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            my: 1,
+          }}
+        >
           <Typography variant="h5" gutterBottom>
             Productos
           </Typography>
@@ -89,7 +108,7 @@ const Producto = () => {
             Producto
           </Button>
         </Box>
-        <Box sx={{mt:2 }}>
+        <Box sx={{ mt: 2 }}>
           <SearchBar onSearch={handleSearch} />
         </Box>
         <TableComponent data={filteredData} columns={columns} />

@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 import { Box, Typography, Button, Container } from "@mui/material";
-import { useAppDispatch, useAppSelector } from "../../hooks/redux";
-import { getArticulosInsumos } from "../../services/services";
-import { setArticuloInsumo } from "../../redux/slices/articuloInsumo";
-import TableComponent from "../Table/Table";
-import SearchBar from "../Common/SearchBar";
+import { useAppDispatch, useAppSelector } from "../../../hooks/redux";
+import { getArticulosInsumos } from "../../../services/services";
+import { setArticuloInsumo } from "../../../redux/slices/articuloInsumo";
+import TableComponent from "../../ui/Table/Table";
+import SearchBar from "../../Common/SearchBar";
 import { Add } from "@mui/icons-material";
 
 interface Row {
@@ -19,7 +19,9 @@ interface Column {
 
 const Insumo = () => {
   const dispatch = useAppDispatch();
-  const globalArticulosInsumos = useAppSelector((state) => state.articuloInsumo.articuloInsumo);
+  const globalArticulosInsumos = useAppSelector(
+    (state) => state.articuloInsumo.articuloInsumo
+  );
 
   const [filteredData, setFilteredData] = useState<Row[]>([]);
 
@@ -56,22 +58,44 @@ const Insumo = () => {
         />
       ),
     },
-    { id: "denominacion", label: "Nombre", renderCell: (rowData) => <>{rowData.denominacion}</> },
-    { id: "precioCompra", label: "Precio de compra", renderCell: (rowData) => <>{rowData.precioCompra}</> },
-    { id: "precioVenta", label: "Precio de Venta", renderCell: (rowData) => <>{rowData.precioVenta}</> },
-    { id: "stock", label: "Stock", renderCell: (rowData) => <>{rowData.stockActual}</> },
+    {
+      id: "denominacion",
+      label: "Nombre",
+      renderCell: (rowData) => <>{rowData.denominacion}</>,
+    },
+    {
+      id: "precioCompra",
+      label: "Precio de compra",
+      renderCell: (rowData) => <>{rowData.precioCompra}</>,
+    },
+    {
+      id: "precioVenta",
+      label: "Precio de Venta",
+      renderCell: (rowData) => <>{rowData.precioVenta}</>,
+    },
+    {
+      id: "stock",
+      label: "Stock",
+      renderCell: (rowData) => <>{rowData.stockActual}</>,
+    },
     {
       id: "elaboracion",
       label: "¿Es para elaborar?",
       renderCell: (rowData) => <>{rowData.esParaElaborar ? "Sí" : "No"}</>,
     },
   ];
-  
 
   return (
     <Box component="main" sx={{ flexGrow: 1, pl: 9, pt: 4 }}>
       <Container>
-        <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", my: 1 }}>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            my: 1,
+          }}
+        >
           <Typography variant="h5" gutterBottom>
             Insumos
           </Typography>
@@ -88,7 +112,7 @@ const Insumo = () => {
             Insumo
           </Button>
         </Box>
-        <Box sx={{mt:2 }}>
+        <Box sx={{ mt: 2 }}>
           <SearchBar onSearch={handleSearch} />
         </Box>
         <TableComponent data={filteredData} columns={columns} />
