@@ -9,12 +9,12 @@ import {
   ListItemText,
 } from "@mui/material";
 import { Add } from "@mui/icons-material";
-import { useAppDispatch, useAppSelector } from "../../hooks/redux";
-import { getPromociones } from "../../services/services";
-import { setPromocion } from "../../redux/slices/Promocion";
-import TableComponent from "../Table/Table";
-import SearchBar from "../Common/SearchBar";
-import PromocionType from "../../types/Promocion";
+import { useAppDispatch, useAppSelector } from "../../../hooks/redux";
+import { getPromociones } from "../../../services/services";
+import { setPromocion } from "../../../redux/slices/Promocion";
+import TableComponent from "../../ui/Table/Table";
+import SearchBar from "../../Common/SearchBar";
+import PromocionType from "../../../types/Promocion";
 
 interface Row {
   [key: string]: any;

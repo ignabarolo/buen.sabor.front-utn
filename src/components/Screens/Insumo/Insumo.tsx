@@ -1,11 +1,11 @@
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import { Box, Typography, Button, Container } from "@mui/material";
+import { useAppDispatch, useAppSelector } from "../../../hooks/redux";
+import { getArticulosInsumos } from "../../../services/services";
+import { setArticuloInsumo } from "../../../redux/slices/articuloInsumo";
+import TableComponent from "../../ui/Table/Table";
+import SearchBar from "../../Common/SearchBar";
 import { Add } from "@mui/icons-material";
-import { useAppDispatch, useAppSelector } from "../../hooks/redux";
-import { getArticulosManufacturados } from "../../services/services";
-import { setArticuloManufacturado } from "../../redux/slices/articuloManufacturado";
-import TableComponent from "../Table/Table";
-import SearchBar from "../Common/SearchBar";
 
 interface Row {
   [key: string]: any;
@@ -17,31 +17,30 @@ interface Column {
   renderCell: (rowData: Row) => JSX.Element;
 }
 
-const Producto = () => {
+const Insumo = () => {
   const dispatch = useAppDispatch();
-  const globalArticulosManufacturados = useAppSelector(
-    (state) => state.articuloManufacturado.articuloManufacturado
+  const globalArticulosInsumos = useAppSelector(
+    (state) => state.articuloInsumo.articuloInsumo
   );
 
-  const [filteredData, setFilteredData] = useState<Row[]>([]); // Estado para los datos filtrados
+  const [filteredData, setFilteredData] = useState<Row[]>([]);
 
   useEffect(() => {
-    const fetchArticulosManufacturados = async () => {
+    const fetchArticulosInsumos = async () => {
       try {
-        const articulos = await getArticulosManufacturados();
-        dispatch(setArticuloManufacturado(articulos));
-        setFilteredData(articulos); // Inicializa los datos filtrados con todos los artículos
+        const articulos = await getArticulosInsumos();
+        dispatch(setArticuloInsumo(articulos));
+        setFilteredData(articulos);
       } catch (error) {
-        console.error("Error al obtener los artículos manufacturados:", error);
+        console.error("Error al obtener los artículos insumos:", error);
       }
     };
 
-    fetchArticulosManufacturados();
+    fetchArticulosInsumos();
   }, [dispatch]);
 
   const handleSearch = (query: string) => {
-    // Filtrar los datos globales según la consulta de búsqueda
-    const filtered = globalArticulosManufacturados.filter((item) =>
+    const filtered = globalArticulosInsumos.filter((item) =>
       item.denominacion.toLowerCase().includes(query.toLowerCase())
     );
     setFilteredData(filtered);
@@ -65,19 +64,24 @@ const Producto = () => {
       renderCell: (rowData) => <>{rowData.denominacion}</>,
     },
     {
+      id: "precioCompra",
+      label: "Precio de compra",
+      renderCell: (rowData) => <>{rowData.precioCompra}</>,
+    },
+    {
       id: "precioVenta",
-      label: "Precio",
+      label: "Precio de Venta",
       renderCell: (rowData) => <>{rowData.precioVenta}</>,
     },
     {
-      id: "descripcion",
-      label: "Descripción",
-      renderCell: (rowData) => <>{rowData.descripcion}</>,
+      id: "stock",
+      label: "Stock",
+      renderCell: (rowData) => <>{rowData.stockActual}</>,
     },
     {
-      id: "tiempoEstimadoMinutos",
-      label: "Tiempo estimado en minutos",
-      renderCell: (rowData) => <>{rowData.tiempoEstimadoMinutos}</>,
+      id: "elaboracion",
+      label: "¿Es para elaborar?",
+      renderCell: (rowData) => <>{rowData.esParaElaborar ? "Sí" : "No"}</>,
     },
   ];
 
@@ -93,7 +97,7 @@ const Producto = () => {
           }}
         >
           <Typography variant="h5" gutterBottom>
-            Productos
+            Insumos
           </Typography>
           <Button
             sx={{
@@ -105,7 +109,7 @@ const Producto = () => {
             variant="contained"
             startIcon={<Add />}
           >
-            Producto
+            Insumo
           </Button>
         </Box>
         <Box sx={{ mt: 2 }}>
@@ -117,4 +121,4 @@ const Producto = () => {
   );
 };
 
-export default Producto;
+export default Insumo;

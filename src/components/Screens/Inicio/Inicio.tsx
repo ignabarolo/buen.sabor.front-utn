@@ -1,8 +1,8 @@
 import { Box, Grid, Container, Typography } from "@mui/material";
-import InicioCard from "../Common/InicioCard";
-import ChartCard from "./ChartCard";
-import Barra from "./Barra";
-import Pie from "./Pie";
+import InicioCard from "../../Common/InicioCard";
+import ChartCard from "../../ui/ChartCard/ChartCard";
+import Barra from "../../ui/Barra/Barra";
+import Pie from "../../ui/Pie/Pie";
 
 const productosContent = {
   url: "https://w6h5a5r4.rocketcdn.me/wp-content/uploads/2019/06/pizza-con-chorizo-jamon-y-queso-1080x671.jpg",
@@ -61,12 +61,12 @@ const Inicio: React.FC = () => {
         >
           <Grid item xs={12} md={4}>
             <Box sx={cardStyle}>
-              <InicioCard content={productosContent} />
+              <InicioCard content={empresasContent} />
             </Box>
           </Grid>
           <Grid item xs={12} md={4}>
             <Box sx={cardStyle}>
-              <InicioCard content={empresasContent} />
+              <InicioCard content={productosContent} />
             </Box>
           </Grid>
           <Grid item xs={12} md={4}>

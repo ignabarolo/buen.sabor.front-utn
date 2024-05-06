@@ -1,11 +1,11 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Box, Typography, Button, Container } from "@mui/material";
-import { useAppDispatch, useAppSelector } from "../../hooks/redux";
-import { getArticulosInsumos } from "../../services/services";
-import { setArticuloInsumo } from "../../redux/slices/articuloInsumo";
-import TableComponent from "../Table/Table";
-import SearchBar from "../Common/SearchBar";
 import { Add } from "@mui/icons-material";
+import { useAppDispatch, useAppSelector } from "../../../hooks/redux";
+import { getArticulosManufacturados } from "../../../services/services";
+import { setArticuloManufacturado } from "../../../redux/slices/articuloManufacturado";
+import TableComponent from "../../ui/Table/Table";
+import SearchBar from "../../Common/SearchBar";
 
 interface Row {
   [key: string]: any;
@@ -17,30 +17,31 @@ interface Column {
   renderCell: (rowData: Row) => JSX.Element;
 }
 
-const Insumo = () => {
+const Producto = () => {
   const dispatch = useAppDispatch();
-  const globalArticulosInsumos = useAppSelector(
-    (state) => state.articuloInsumo.articuloInsumo
+  const globalArticulosManufacturados = useAppSelector(
+    (state) => state.articuloManufacturado.articuloManufacturado
   );
 
-  const [filteredData, setFilteredData] = useState<Row[]>([]);
+  const [filteredData, setFilteredData] = useState<Row[]>([]); // Estado para los datos filtrados
 
   useEffect(() => {
-    const fetchArticulosInsumos = async () => {
+    const fetchArticulosManufacturados = async () => {
       try {
-        const articulos = await getArticulosInsumos();
-        dispatch(setArticuloInsumo(articulos));
-        setFilteredData(articulos);
+        const articulos = await getArticulosManufacturados();
+        dispatch(setArticuloManufacturado(articulos));
+        setFilteredData(articulos); // Inicializa los datos filtrados con todos los artículos
       } catch (error) {
-        console.error("Error al obtener los artículos insumos:", error);
+        console.error("Error al obtener los artículos manufacturados:", error);
       }
     };
 
-    fetchArticulosInsumos();
+    fetchArticulosManufacturados();
   }, [dispatch]);
 
   const handleSearch = (query: string) => {
-    const filtered = globalArticulosInsumos.filter((item) =>
+    // Filtrar los datos globales según la consulta de búsqueda
+    const filtered = globalArticulosManufacturados.filter((item) =>
       item.denominacion.toLowerCase().includes(query.toLowerCase())
     );
     setFilteredData(filtered);
@@ -64,24 +65,19 @@ const Insumo = () => {
       renderCell: (rowData) => <>{rowData.denominacion}</>,
     },
     {
-      id: "precioCompra",
-      label: "Precio de compra",
-      renderCell: (rowData) => <>{rowData.precioCompra}</>,
-    },
-    {
       id: "precioVenta",
-      label: "Precio de Venta",
+      label: "Precio",
       renderCell: (rowData) => <>{rowData.precioVenta}</>,
     },
     {
-      id: "stock",
-      label: "Stock",
-      renderCell: (rowData) => <>{rowData.stockActual}</>,
+      id: "descripcion",
+      label: "Descripción",
+      renderCell: (rowData) => <>{rowData.descripcion}</>,
     },
     {
-      id: "elaboracion",
-      label: "¿Es para elaborar?",
-      renderCell: (rowData) => <>{rowData.esParaElaborar ? "Sí" : "No"}</>,
+      id: "tiempoEstimadoMinutos",
+      label: "Tiempo estimado en minutos",
+      renderCell: (rowData) => <>{rowData.tiempoEstimadoMinutos}</>,
     },
   ];
 
@@ -97,7 +93,7 @@ const Insumo = () => {
           }}
         >
           <Typography variant="h5" gutterBottom>
-            Insumos
+            Productos
           </Typography>
           <Button
             sx={{
@@ -109,7 +105,7 @@ const Insumo = () => {
             variant="contained"
             startIcon={<Add />}
           >
-            Insumo
+            Producto
           </Button>
         </Box>
         <Box sx={{ mt: 2 }}>
@@ -121,4 +117,4 @@ const Insumo = () => {
   );
 };
 
-export default Insumo;
+export default Producto;
