@@ -37,37 +37,37 @@ const Inicio: React.FC = () => {
         <Typography component="h1" variant="h5" color="initial">
           Bienvenido
         </Typography>
-        {/*        
-                <Grid container spacing={3} sx={{ py: 2, alignContent: 'center' , justifyContent: 'center' }}>
-                    <Grid item xs={12} md={6}>
-                        <ChartCard title="Gráfico de Barras">
-                            <Barra />
-                        </ChartCard>
-                    </Grid>
-                    <Grid item xs={12} md={6}>
-                        <ChartCard title="Gráfico de Pastel">
-                            <Pie />
-                        </ChartCard>
-                    </Grid>
-                </Grid>
-                <Grid container spacing={3} sx={{ alignContent: 'center' , justifyContent: 'center'}}>
-                    <Grid item xs={12} md={4}>
-                        <Box sx={cardStyle}>
-                            <InicioCard content={productosContent} />
-                        </Box>
-                    </Grid>
-                    <Grid item xs={12} md={4}>
-                        <Box sx={cardStyle}>
-                            <InicioCard content={empresasContent} />
-                        </Box>
-                    </Grid>
-                    <Grid item xs={12} md={4}>
-                        <Box sx={cardStyle}>
-                            <InicioCard content={promocionesContent} />
-                        </Box>
-                    </Grid>
-                </Grid>
-    */}
+
+        <Grid container spacing={3} sx={{ py: 2, alignContent: 'center', justifyContent: 'center' }}>
+          <Grid item xs={12} md={6}>
+            <ChartCard title="Gráfico de Barras">
+              <Barra />
+            </ChartCard>
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <ChartCard title="Gráfico de Pastel">
+              <Pie />
+            </ChartCard>
+          </Grid>
+        </Grid>
+        <Grid container spacing={3} sx={{ alignContent: 'center', justifyContent: 'center' }}>
+          <Grid item xs={12} md={4}>
+            <Box sx={cardStyle}>
+              <InicioCard content={productosContent} />
+            </Box>
+          </Grid>
+          <Grid item xs={12} md={4}>
+            <Box sx={cardStyle}>
+              <InicioCard content={empresasContent} />
+            </Box>
+          </Grid>
+          <Grid item xs={12} md={4}>
+            <Box sx={cardStyle}>
+              <InicioCard content={promocionesContent} />
+            </Box>
+          </Grid>
+        </Grid>
+
       </Container>
     </Box>
   );

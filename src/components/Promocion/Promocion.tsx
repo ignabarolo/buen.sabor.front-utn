@@ -131,7 +131,7 @@ const Promocion: React.FC = () => {
             sx={{
               bgcolor: "#ff6600",
               "&:hover": {
-                bgcolor: "#d73754",
+                bgcolor: "black",
               },
             }}
             variant="contained"
