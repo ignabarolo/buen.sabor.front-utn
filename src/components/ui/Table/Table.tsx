@@ -1,30 +1,24 @@
 import React, { useState } from 'react';
-import { Table, TableHead, TableBody, TableRow, TableCell, TableSortLabel, TablePagination, IconButton, Box } from '@mui/material';
-import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
+import { Table, TableHead, TableBody, TableRow, TableCell, TableSortLabel, TablePagination, Box } from '@mui/material';
+import DeleteButton from './DeleteButton'; 
+import EditButton from './EditButton';
+import Row from '../../../types/Row';
+import Column from '../../../types/Column';
 
-interface Row {
-  [key: string]: any;
-}
-
-interface Column {
-  id: keyof Row;
-  label: string;
-  renderCell?: (row: Row) => React.ReactNode;
-}
-
-interface Props {
-  data: Row[];
+interface Props{
+  data: any[]; // Utiliza la interfaz genérica DataModel<T>
   columns: Column[];
+  onEdit: (item: any) => void; // Utiliza la interfaz genérica DataModel<T>
+  onDelete: (item:any ) => void; // Utiliza la interfaz genérica DataModel<T>
 }
 
-const TableComponent: React.FC<Props> = ({ data, columns }) => {
+const TableComponent: React.FC<Props> = ({ data, columns, onEdit, onDelete }) => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [orderBy, setOrderBy] = useState<keyof Row>('');
   const [order, setOrder] = useState<'asc' | 'desc'>('asc');
 
-  const handleChangePage = (event: unknown, newPage: number) => {
+  const handleChangePage = (_event: unknown, newPage: number) => {
     setPage(newPage);
   };
 
@@ -65,7 +59,7 @@ const TableComponent: React.FC<Props> = ({ data, columns }) => {
                 </TableSortLabel>
               </TableCell>
             ))}
-            <TableCell>Acciones</TableCell> {/* Agregar una columna para las acciones */}
+            <TableCell>Acciones</TableCell> {/* Nueva columna para acciones */}
           </TableRow>
         </TableHead>
         <TableBody>
@@ -77,13 +71,10 @@ const TableComponent: React.FC<Props> = ({ data, columns }) => {
                 </TableCell>
               ))}
               <TableCell>
-                <Box sx={{ display: 'flex', gap: 1 }}>
-                  <IconButton aria-label="editar">
-                    <EditIcon />
-                  </IconButton>
-                  <IconButton aria-label="eliminar">
-                    <DeleteIcon />
-                  </IconButton>
+                <Box sx={{ display: 'flex'}}>
+                  {/* Utilizamos los nuevos componentes de botones */}
+                  <EditButton onClick={() => onEdit(row)} />
+                  <DeleteButton onClick={() => onDelete(row)} />
                 </Box>
               </TableCell>
             </TableRow>

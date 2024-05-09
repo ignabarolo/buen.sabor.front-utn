@@ -1,5 +1,6 @@
-interface IUnidadMedida {
-     id: number;
+import DataModel from "./DataModel";
+
+interface IUnidadMedida extends DataModel<IUnidadMedida> {
      denominacion: string;
 }
 

@@ -1,5 +1,6 @@
-interface IImagenes {
-    id: number;
+import DataModel from "./DataModel";
+
+interface IImagenes extends DataModel<IImagenes> {
     url: string;
 }
 

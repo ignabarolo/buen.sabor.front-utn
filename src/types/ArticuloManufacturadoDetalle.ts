@@ -1,7 +1,7 @@
 import ArticuloInsumo from "./ArticuloInsumo";
+import DataModel from "./DataModel";
 
-interface IArticuloManufacturadoDetalle {
-    id: number;
+interface IArticuloManufacturadoDetalle extends  DataModel<IArticuloManufacturadoDetalle> {
     cantidad: number;
     articuloInsumo: ArticuloInsumo;
 }

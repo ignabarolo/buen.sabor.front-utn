@@ -1,8 +1,8 @@
 import ArticuloInsumo from "./ArticuloInsumo";
+import DataModel from "./DataModel";
 import Imagenes from "./Imagenes";
 
-interface Promocion {
-    id: number;
+interface Promocion extends DataModel<Promocion>{
     denominacion: string;
     fechaDesde: string;
     fechaHasta: string;

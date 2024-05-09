@@ -1,13 +1,24 @@
 import { configureStore } from '@reduxjs/toolkit'
-import articuloManufacturadoSlice from '../slices/articuloManufacturado'
-import { articuloInsumoSlice } from '../slices/articuloInsumo' 
-import { PromocionSlice } from '../slices/Promocion'
+import EmpresaReducer from '../slices/EmpresaReducer'
+import ModalReducer from '../slices/ModalReducer'
+import SucursalReducer from '../slices/SucursalReducer'
+import ProductoReducer from '../slices/ProductoReducer'
+import PromocionReducer from '../slices/PromocionReducer'
+import InsumoReducer from '../slices/InsumoReducer'
+import CategoriaReducer from '../slices/CategoriaReducer'
+import UnidadMedidaReducer from '../slices/UnidadMedidaReducer'
+
 
 export const store = configureStore({
   reducer: {
-    articuloManufacturado: articuloManufacturadoSlice,
-    articuloInsumo: articuloInsumoSlice.reducer, 
-    promocion: PromocionSlice.reducer,
+    empresa: EmpresaReducer,
+    modal: ModalReducer,
+    sucursal: SucursalReducer,
+    producto: ProductoReducer,
+    promocion: PromocionReducer,
+    insumo: InsumoReducer,
+    categoria: CategoriaReducer,
+    unidadMedida: UnidadMedidaReducer,
   },
 })
 
