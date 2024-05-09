@@ -92,10 +92,10 @@ const Categoria = () => {
     setShowSubcategoriaModal(true);
   };
 
-  //   const handleCloseSubcategoriaModal = () => {
-  //     setShowSubcategoriaModal(false);
-  //     setCategoriaPadre(null); // Limpiamos la categoría padre
-  //   };
+  const handleCloseSubcategoriaModal = () => {
+    setShowSubcategoriaModal(false);
+    setCategoriaPadre(null); // Limpiamos la categoría padre
+  };
 
   // Definición de las columnas para la tabla de categorías
   const columns: Column[] = [
@@ -125,20 +125,20 @@ const Categoria = () => {
         </>
       ),
     },
-    // {
-    //   id: "agregarSubcategoria",
-    //   label: "Agregar Subcategoría",
-    //   renderCell: (rowData) => (
-    //     <Button
-    //       onClick={() => handleOpenSubcategoriaModal(rowData)} // Abre el modal de subcategoría pasando la categoría padre
-    //       variant="outlined"
-    //       color="primary"
-    //       startIcon={<Add />}
-    //     >
-    //       Agregar
-    //     </Button>
-    //   ),
-    // },
+    {
+      id: "agregarSubcategoria",
+      label: "Agregar Subcategoría",
+      renderCell: (rowData) => (
+        <Button
+          onClick={() => handleOpenSubcategoriaModal(rowData)} // Abre el modal de subcategoría pasando la categoría padre
+          variant="outlined"
+          color="primary"
+          startIcon={<Add />}
+        >
+          Agregar
+        </Button>
+      ),
+    },
     {
       id: "articulos",
       label: "Artículos",
