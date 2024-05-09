@@ -2,14 +2,14 @@ import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import BaseNavbar from "../components/ui/common/Navbar/BaseNavbar";
 import BasicSidebar from "../components/ui/common/Sidebar/BasicSidebar";
-import Inicio from "../components/screens/Inicio/Inicio";
 import "./routes.css";
-import Empresa from "../components/screens/Empresa/Empresa";
-import Sucursal from "../components/screens/Sucursal/Sucursal";
-import Producto from "../components/screens/Producto/Producto";
-import Insumo from "../components/screens/Insumo/Insumo";
-import Promocion from "../components/screens/Promocion/Promocion";
-import Categoria from "../components/screens/Categoria/Categoria";
+import Inicio from "../components/Screens/Inicio/Inicio";
+import Empresa from "../components/Screens/Empresa/Empresa";
+import Sucursal from "../components/Screens/Sucursal/Sucursal";
+import Producto from "../components/Screens/Producto/Producto";
+import Insumo from "../components/Screens/Insumo/Insumo";
+import Promocion from "../components/Screens/Promocion/Promocion";
+import Categoria from "../components/Screens/Categoria/Categoria";
 
 const AppRouter: React.FC = () => {
   return (

@@ -13,33 +13,35 @@ const BasicSidebar: React.FC = () => {
         <div>
             <CSidebar className="border-end d-flex flex-column" style={{ height: '100vh' }}>
                 <CSidebarNav>
-                    <CNavTitle>
+                    <CNavTitle style={{ color: "#E66200" }}>
                         Dashboard
                     </CNavTitle>
                     <CNavItem>
                         <Link to="/" className="nav-link" >
-                            <CIcon customClassName="nav-icon" icon={cilBarChart} />
+                            <CIcon customClassName="nav-icon" icon={cilBarChart} style={{ color: "#E66200" }} />
                             Inicio
                         </Link>
                     </CNavItem>
 
                     <CNavItem>
                         <Link to="/empresas" className="nav-link">
-                            <CIcon customClassName="nav-icon" icon={cilBuilding} />
+                            <CIcon customClassName="nav-icon" icon={cilBuilding} style={{ color: "#E66200" }} />
                             Empresas
                         </Link>
                     </CNavItem>
                     <CNavGroup
                         toggler={
                             <>
-                                <CIcon customClassName="nav-icon" icon={cilFastfood} />
-                                Productos
+                                <Link to="/productos" className='nav-link'>
+                                    <CIcon customClassName="nav-icon" icon={cilFastfood} style={{ color: "#E66200" }} />
+                                    Productos
+                                </Link>
                             </>
                         }
                     >
                         <CNavItem>
                             <Link to="/productos" className="nav-link" >
-                                <span className="nav-icon"><span className="nav-icon-bullet"></span></span>
+                                <span className="nav-icon" ><span className="nav-icon-bullet" ></span></span>
                                 Lista de Productos
                             </Link>
                         </CNavItem>
@@ -53,7 +55,7 @@ const BasicSidebar: React.FC = () => {
 
                     <CNavItem>
                         <Link to="/promociones" className="nav-link">
-                            <CIcon customClassName="nav-icon" icon={cilDollar} />
+                            <CIcon customClassName="nav-icon" icon={cilDollar} style={{ color: "#E66200" }} />
                             Promociones
                         </Link>
                     </CNavItem>
@@ -61,7 +63,7 @@ const BasicSidebar: React.FC = () => {
                     <CNavGroup
                         toggler={
                             <>
-                                <CIcon customClassName="nav-icon" icon={cilPeople} />
+                                <CIcon customClassName="nav-icon" icon={cilPeople} style={{ color: "#E66200" }} />
                                 Empleados
                             </>
                         }
@@ -81,7 +83,7 @@ const BasicSidebar: React.FC = () => {
                     </CNavGroup>
                     <CNavItem>
                         <Link to="/insumos" className="nav-link">
-                            <CIcon customClassName="nav-icon" icon={cilCart} />
+                            <CIcon customClassName="nav-icon" icon={cilCart} style={{ color: "#E66200" }} />
                             Insumos
                         </Link>
                     </CNavItem>
@@ -89,7 +91,7 @@ const BasicSidebar: React.FC = () => {
             </CSidebar>
         </div>
 
-        
+
     );
 }
 

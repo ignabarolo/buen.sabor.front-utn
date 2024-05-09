@@ -44,16 +44,16 @@ export default function PrimarySearchAppBar() {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}><div><Person2OutlinedIcon sx={{mr: 1}}/></div>Perfil</MenuItem>
-      <MenuItem onClick={handleMenuClose}><div><SettingsOutlinedIcon sx={{mr: 1}} /></div>Ajustes</MenuItem>
+      <MenuItem onClick={handleMenuClose}><div><Person2OutlinedIcon sx={{mr: 1}} style={{color:"#E66200"}}/></div>Perfil</MenuItem>
+      <MenuItem onClick={handleMenuClose}><div><SettingsOutlinedIcon sx={{mr: 1}} style={{color:"#E66200"}} /></div>Ajustes</MenuItem>
       <Divider/>
-      <MenuItem onClick={handleMenuClose}><div><LoginOutlinedIcon sx={{mr: 1}} /></div>Cerrar Sesión</MenuItem>
+      <MenuItem onClick={handleMenuClose}><div><LoginOutlinedIcon sx={{mr: 1}} style={{color:"#E66200"}} /></div>Cerrar Sesión</MenuItem>
     </Menu>
   );
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static" sx={{bgcolor: '#fb6376'}}>
+      <AppBar position="static" sx={{bgcolor: '#E66200'}}>
         <Toolbar>
           <Typography
             variant="h6"
