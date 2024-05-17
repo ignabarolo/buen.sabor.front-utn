@@ -30,9 +30,9 @@ const Categoria = () => {
   const globalCategorias = useAppSelector((state) => state.categoria.data);
 
   const [filteredData, setFilteredData] = useState<Row[]>([]);
-  const [showSubcategoriaModal, setShowSubcategoriaModal] =
-    useState<boolean>(false); // Estado para controlar la visibilidad del modal de subcategoría
-  const [categoriaPadre, setCategoriaPadre] = useState<ICategoria | null>(null);
+  // const [showSubcategoriaModal, setShowSubcategoriaModal] =
+  useState<boolean>(false); // Estado para controlar la visibilidad del modal de subcategoría
+  const [categoriaPadre] = useState<ICategoria | null>(null);
 
   // Función para obtener las categorias
   const fetchCategorias = async () => {
@@ -85,11 +85,6 @@ const Categoria = () => {
   // Función para mostrar el modal de añadir categoría
   const handleAddCategoria = () => {
     dispatch(toggleModal({ modalName: "modal" }));
-  };
-
-  const handleOpenSubcategoriaModal = (categoria: ICategoria) => {
-    setCategoriaPadre(categoria);
-    setShowSubcategoriaModal(true);
   };
 
   //   const handleCloseSubcategoriaModal = () => {
