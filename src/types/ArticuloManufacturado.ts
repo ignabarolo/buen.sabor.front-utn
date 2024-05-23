@@ -6,7 +6,7 @@ import UnidadMedida from "./UnidadMedida";
 interface IArticuloManufacturado extends DataModel<IArticuloManufacturado>  {
     denominacion: string;
     precioVenta: number;
-    imagenes:Imagenes [];
+    imagenes:Imagenes[];
     unidadMedida: UnidadMedida;
     descripcion: string;
     tiempoEstimadoMinutos: number;

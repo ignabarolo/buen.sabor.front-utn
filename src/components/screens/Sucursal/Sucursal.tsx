@@ -26,7 +26,6 @@ const SucursalesEmpresa: React.FC = () => {
   const sucursalesEmpresa = useAppSelector((state) => state.sucursal.data);
 
   const [isEditing, setIsEditing] = useState(false);
-  s;
   const [sucursalaEditar, setSucursalaEditar] = useState<Sucursal>();
 
   useEffect(() => {
