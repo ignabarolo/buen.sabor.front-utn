@@ -8,8 +8,9 @@ import Empresa from "../components/Screens/Empresa/Empresa";
 import Sucursal from "../components/Screens/Sucursal/Sucursal";
 import Producto from "../components/Screens/Producto/Producto";
 import Insumo from "../components/Screens/Insumo/Insumo";
-import Promocion from "../components/Screens/Promocion/Promocion";
+
 import Categoria from "../components/Screens/Categoria/Categoria";
+import Promocion from "../components/Screens/Promocion/Promocion";
 
 const AppRouter: React.FC = () => {
   return (

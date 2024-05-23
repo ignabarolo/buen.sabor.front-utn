@@ -1,5 +1,15 @@
 import { useEffect, useState } from "react";
-import { Box, Typography, Button, Container, IconButton, Tooltip, List, ListItem, ListItemText } from "@mui/material";
+import {
+  Box,
+  Typography,
+  Button,
+  Container,
+  IconButton,
+  Tooltip,
+  List,
+  ListItem,
+  ListItemText,
+} from "@mui/material";
 import { Add, AddCircle, Visibility } from "@mui/icons-material";
 import { useAppDispatch, useAppSelector } from "../../../hooks/redux";
 import CategoriaService from "../../../services/CategoriaService";
@@ -13,16 +23,12 @@ import SearchBar from "../../ui/common/SearchBar/SearchBar";
 import TableComponent from "../../ui/Table/Table";
 import ModalCategoria from "../../ui/Modals/ModalCategoria";
 
-
-
 const Categoria = () => {
   const url = import.meta.env.VITE_API_URL;
   const dispatch = useAppDispatch();
   const categoriaService = new CategoriaService();
   // Estado global de Redux
-  const globalCategorias = useAppSelector(
-    (state) => state.categoria.data
-  );
+  const globalCategorias = useAppSelector((state) => state.categoria.data);
 
   const [filteredData, setFilteredData] = useState<Row[]>([]);
   const [showSubcategoriaModal, setShowSubcategoriaModal] = useState<boolean>(
@@ -53,18 +59,19 @@ const Categoria = () => {
     handleSearch(query, globalCategorias, "denominacion", setFilteredData);
   };
 
-
   const onDeleteCategoria = async (categoria: ICategoria) => {
     try {
       await onDelete(
         categoria,
         async (categoriaToDelete: ICategoria) => {
           // Aquí se llama al servicio para eliminar la categoría
-          await categoriaService.delete(url + '/categorias', categoriaToDelete.id.toString());
+          await categoriaService.delete(
+            url + "/categorias",
+            categoriaToDelete.id.toString()
+          );
         },
         fetchCategorias, // Se llama a fetchCategorias para actualizar la lista después de la eliminación
-        () => {
-        },
+        () => {},
         (error: any) => {
           console.error("Error al eliminar categoría:", error);
         }
@@ -73,7 +80,7 @@ const Categoria = () => {
       console.error("Error al eliminar categoría:", error);
     }
   };
-  
+
   // Función para editar una categoría
   const handleEdit = (index: number) => {
     // Aquí implementa la lógica para editar la categoría en el índice especificado
@@ -85,23 +92,18 @@ const Categoria = () => {
     dispatch(toggleModal({ modalName: "modal" }));
   };
 
-
-
-  const handleOpenSubcategoriaModal = (categoria: ICategoria) => {
-    setCategoriaPadre(categoria);
-    setShowSubcategoriaModal(true);
-  };
-
-//   const handleCloseSubcategoriaModal = () => {
-//     setShowSubcategoriaModal(false);
-//     setCategoriaPadre(null); // Limpiamos la categoría padre
-//   };
-
-
+  //   const handleCloseSubcategoriaModal = () => {
+  //     setShowSubcategoriaModal(false);
+  //     setCategoriaPadre(null); // Limpiamos la categoría padre
+  //   };
 
   // Definición de las columnas para la tabla de categorías
   const columns: Column[] = [
-    { id: "denominacion", label: "Nombre", renderCell: (rowData) => <>{rowData.denominacion}</> },
+    {
+      id: "denominacion",
+      label: "Nombre",
+      renderCell: (rowData) => <>{rowData.denominacion}</>,
+    },
     {
       id: "subCategorias",
       label: "Subcategorías",
@@ -109,11 +111,13 @@ const Categoria = () => {
         <>
           {rowData.subCategorias.length > 0 ? (
             <List>
-              {rowData.subCategorias.map((subcategoria: ICategoria, index: number) => (
-                <ListItem key={index}>
-                  <ListItemText primary={subcategoria.denominacion} />
-                </ListItem>
-              ))}
+              {rowData.subCategorias.map(
+                (subcategoria: ICategoria, index: number) => (
+                  <ListItem key={index}>
+                    <ListItemText primary={subcategoria.denominacion} />
+                  </ListItem>
+                )
+              )}
             </List>
           ) : (
             "-"
@@ -124,16 +128,7 @@ const Categoria = () => {
     {
       id: "agregarSubcategoria",
       label: "Agregar Subcategoría",
-      renderCell: (rowData) => (
-        <Button
-          onClick={() => handleOpenSubcategoriaModal(rowData.subCategoria)} // Abre el modal de subcategoría pasando la categoría padre
-          variant="outlined"
-          color="primary"
-          startIcon={<Add />}
-        >
-          Agregar
-        </Button>
-      ),
+      renderCell: (rowData) => <> {rowData.subcategoria} </>,
     },
     {
       id: "articulos",
@@ -141,23 +136,18 @@ const Categoria = () => {
       renderCell: () => (
         <Box>
           <Tooltip title="Ver Artículos">
-            <IconButton
-              aria-label="Ver Artículos"
-            >
+            <IconButton aria-label="Ver Artículos">
               <Visibility />
             </IconButton>
           </Tooltip>
           <Tooltip title="Agregar artículo">
-            <IconButton
-              aria-label="Agregar artículo"
-            >
-               <AddCircle />
+            <IconButton aria-label="Agregar artículo">
+              <AddCircle />
             </IconButton>
           </Tooltip>
         </Box>
       ),
     },
-    
   ];
 
   return (
