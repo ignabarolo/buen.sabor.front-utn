@@ -112,15 +112,6 @@ const EmpresaComponent = () => {
               <Visibility />
             </IconButton>
           </Tooltip>
-          <Tooltip title="Agregar Sucursal">
-            <IconButton
-              component={Link}
-              to={`/agregar-sucursal/${empresa.id}`}
-              aria-label="Agregar Sucursal"
-            >
-              <AddCircle />
-            </IconButton>
-          </Tooltip>
         </>
       ),
     },
