@@ -32,10 +32,10 @@ const BasicSidebar: React.FC = () => {
                     <CNavGroup
                         toggler={
                             <>
-                                <Link to="/productos" className='nav-link'>
+
                                     <CIcon customClassName="nav-icon" icon={cilFastfood} style={{ color: "#E66200" }} />
                                     Productos
-                                </Link>
+
                             </>
                         }
                     >

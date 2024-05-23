@@ -11,6 +11,7 @@ import { toggleModal } from "../../../redux/slices/ModalReducer";
 import Column from "../../../types/Column";
 import SearchBar from "../../ui/common/SearchBar/SearchBar";
 import TableComponent from "../../ui/Table/Table";
+import ModalCategoria from "../../ui/Modals/ModalCategoria";
 
 
 
@@ -28,6 +29,9 @@ const Categoria = () => {
     false
   ); // Estado para controlar la visibilidad del modal de subcategoría
   const [categoriaPadre, setCategoriaPadre] = useState<ICategoria | null>(null);
+  
+  const [isEditing, setIsEditing] = useState(false);
+  const [categoriaAEditar, setCategoriaAEditar] = useState<Row>();
 
   // Función para obtener las categorias
   const fetchCategorias = async () => {
@@ -122,7 +126,7 @@ const Categoria = () => {
       label: "Agregar Subcategoría",
       renderCell: (rowData) => (
         <Button
-          onClick={() => handleOpenSubcategoriaModal(rowData)} // Abre el modal de subcategoría pasando la categoría padre
+          onClick={() => handleOpenSubcategoriaModal(rowData.subCategoria)} // Abre el modal de subcategoría pasando la categoría padre
           variant="outlined"
           color="primary"
           startIcon={<Add />}
@@ -195,6 +199,16 @@ const Categoria = () => {
           onEdit={handleEdit}
           onDelete={onDeleteCategoria}
         />
+        <ModalCategoria 
+        modalName="modal" 
+        initialValues={{
+        id: categoriaAEditar ? categoriaAEditar.id: 0,
+        denominacion: categoriaAEditar ? categoriaAEditar.denominacion:'',
+        articulos: categoriaAEditar ? categoriaAEditar.articulos: [],
+        subCategorias: categoriaAEditar ? categoriaAEditar.subCategorias: [{id:0, denominacion:'', articulos:[], subCategorias:[]}]
+        }}
+        isEditMode={isEditing} 
+        getCategoria={fetchCategorias} />
       </Container>
     </Box>
   );
