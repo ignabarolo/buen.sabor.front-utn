@@ -11,3 +11,4 @@ export default interface ProductoPost {
     articuloManufacturadoDetalles: ProductoDetallePost[];
     detalles?: ProductoDetallePost[]
   }
+  

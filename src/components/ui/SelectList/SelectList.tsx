@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import './SelectList.css'
+import './select.css'
 
 interface SelectListProps {
     title: string;

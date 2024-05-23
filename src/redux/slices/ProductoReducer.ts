@@ -1,4 +1,4 @@
-import Producto from '../../types/ArticuloManufacturado';
+import Producto from '../../types/IProducto';
 import { createGenericSlice } from './GenericReducer';
 
 const productoSlice = createGenericSlice<Producto[]>('productoState', { data: [] });
