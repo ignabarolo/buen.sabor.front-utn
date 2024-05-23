@@ -4,25 +4,26 @@ import { Box, MenuItem, Select, FormControl, TextField, Button, Typography, Grid
 import GenericModal from './GenericModal';
 import TextFieldValue from '../TextFieldValue/TextFieldValue';
 import ProductoService from '../../../services/ProductoService';
-import IProducto from '../../../types/IProducto';
-import UnidadMedidaService from '../../../services/UnidadMedidaService';
-import ProductoDetalleService from '../../../services/ProductoDetalleService';
 import InsumoService from '../../../services/InsumoService';
 import Swal from 'sweetalert2';
 import '../TextFieldValue/textFieldValue.css';
 import Column from '../../../types/Column';
-import IProductoDetalle from '../../../types/IProductoDetalle';
-import '../../../utils/swal.css';
 import CategoriaService from '../../../services/CategoriaService';
-import { IInsumo } from '../../../types/IInsumo';
-import TableComponent from '../Tables/Table/TableComponent';
+import IArticuloManufacturado from '../../../types/ArticuloManufacturado';
+import ProductoDetalleService from '../../../services/ProductoDetalleService';
+import UnidadMedidaService from '../../../services/UnidadesMedidasService';
+import IArticuloManufacturadoDetalle from '../../../types/ArticuloManufacturadoDetalle';
+import '../../../utils/swal.css';
+import IArticuloInsumo from '../../../types/ArticuloInsumo';
+import TableComponent from '../Table/TableComponent';
+
 
 interface ModalProductoProps {
     modalName: string;
     initialValues: any;
     isEditMode: boolean;
     getProductos: Function;
-    productoAEditar?: IProducto;
+    productoAEditar?: IArticuloManufacturado;
 }
 
 const ModalProducto: React.FC<ModalProductoProps> = ({
@@ -102,7 +103,7 @@ const ModalProducto: React.FC<ModalProductoProps> = ({
         precioVenta: Yup.number().required('Campo requerido'),
     });
 
-    const onDeleteProductoDetalle = async (productoDetalle: IProductoDetalle) => {
+    const onDeleteProductoDetalle = async (productoDetalle: IArticuloManufacturadoDetalle) => {
         try {
             if (isEditMode && productoAEditar) {
                 // Si está en modo de edición, usamos el servicio para eliminar el detalle del producto de la base de datos
@@ -183,7 +184,7 @@ const ModalProducto: React.FC<ModalProductoProps> = ({
         }
     ];
 
-    const handleSubmit = async (values: IProducto) => {
+    const handleSubmit = async (values: IArticuloManufacturado) => {
 
         try {
             const productoPost = {
@@ -398,7 +399,7 @@ const ModalProducto: React.FC<ModalProductoProps> = ({
                                 </MenuItem>
                                 {categoriasInsumo
                                     .find(categoria => categoria.id === selectedCategoria)
-                                    ?.insumos.map((insumo: IInsumo) => (
+                                    ?.insumos.map((insumo: IArticuloInsumo) => (
                                         <MenuItem key={insumo.id} value={insumo.id}>
                                             {insumo.denominacion}
                                         </MenuItem>

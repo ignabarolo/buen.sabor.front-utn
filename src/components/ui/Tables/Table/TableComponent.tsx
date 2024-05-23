@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Box, Card, CardContent, Typography, IconButton, Grid, TablePagination } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-import Column from '../../../../types/Column';
+import Column from '../../../types/Column';
 
 interface Props {
   data: any[];
