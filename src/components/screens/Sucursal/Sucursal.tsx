@@ -11,6 +11,8 @@ import { handleSearch } from '../../../utils/utils';
 import SearchBar from '../../ui/common/SearchBar/SearchBar';
 import TableComponent from '../../ui/Table/Table';
 import { setSucursal } from '../../../redux/slices/SucursalReducer';
+import ModalSucursal from '../../ui/Modals/ModalSucursal';
+import SucursalService from '../../../services/SucursalService';
 
 
 
@@ -21,6 +23,7 @@ const SucursalesEmpresa: React.FC = () => {
   const [nombreEmpresa, setNombreEmpresa] = useState<string>('');
   const dispatch = useAppDispatch();
   const empresaService = new EmpresaService(); 
+  const sucursalService = new SucursalService();
   const url = import.meta.env.VITE_API_URL;
 
 
@@ -28,7 +31,8 @@ const SucursalesEmpresa: React.FC = () => {
     (state) => state.sucursal.data
   );
 
-
+  const [isEditing, setIsEditing] = useState(false);
+  const [sucursalaEditar, setSucursalaEditar] = useState<Sucursal>();
 
 
   useEffect(() => {
@@ -53,6 +57,22 @@ const SucursalesEmpresa: React.FC = () => {
   
     fetchEmpresa();
   }, [empresaId, url]);
+
+  // Función para obtener las sucursales
+  const fetchSucursales = async () => {
+    try {
+      const sucursales = await sucursalService.getAll(url + '/sucursales');
+      dispatch(setSucursal(sucursales));
+      setFilteredData(sucursales);
+    } catch (error) {
+      console.error("Error al obtener los productos:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchSucursales();
+  }, [dispatch]);
+
   
   
   
@@ -94,9 +114,9 @@ const SucursalesEmpresa: React.FC = () => {
           <Button
           onClick={handleAddSucursal}
             sx={{
-              bgcolor: "#fb6376",
+              bgcolor: "#E66200",
               "&:hover": {
-                bgcolor: "#d73754",
+                bgcolor: "#494948",
               },
             }}
             variant="contained"
@@ -109,7 +129,18 @@ const SucursalesEmpresa: React.FC = () => {
           <SearchBar onSearch={onSearch} />
         </Box>
         <TableComponent data={filteredData} columns={columns} onDelete={onDelete} onEdit={handleEdit} />
-        {/* <ModalSucursal getSucursales={fetchSucursales} /> */}
+        <ModalSucursal 
+        modalName="modal" 
+        initialValues={{
+        id: sucursalaEditar ? sucursalaEditar.id: 0,
+        nombre: sucursalaEditar ? sucursalaEditar.nombre:'',
+        horarioApertura: sucursalaEditar ? sucursalaEditar.horarioApertura: '',
+        horarioCierre: sucursalaEditar ? sucursalaEditar.horarioCierre: '',
+        domicilio: sucursalaEditar ? sucursalaEditar.domicilio: {id:0, calle:'', numero:0, cp: 0, piso: 0, nroDpto:0, localidad: {id:0, nombre:'', provincia: {id:0, nombre:'', pais: {id:0, nombre:''}}}},
+        categorias: sucursalaEditar ? sucursalaEditar.categorias: [{id:0, denominacion: '', articulos: [],subCategorias: [{id:0, denominacion:'', articulos:[], subCategorias:[]}]}],
+        }}
+        isEditMode={isEditing} 
+        getSucursales={fetchSucursales} />
       </Container>
     </Box>
   );
