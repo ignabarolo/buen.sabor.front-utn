@@ -1,5 +1,6 @@
 
-import ILocalidad from "../types/ILocalidad";
+
+import Localidad from "../types/Localidad";
 import  BackendClient  from "./BackendClient";
 
-export default class LocalidadService extends BackendClient<ILocalidad> {}
+export default class LocalidadService extends BackendClient<Localidad> {}

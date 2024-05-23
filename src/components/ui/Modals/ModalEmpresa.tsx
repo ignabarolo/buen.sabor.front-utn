@@ -3,7 +3,7 @@ import * as Yup from 'yup';
 import GenericModal from './GenericModal'; 
 import TextFieldValue from '../TextFieldValue/TextFieldValue'; 
 import EmpresaService from '../../../services/EmpresaService'; 
-import Empresa from '../../../types/IEmpresa'; 
+import Empresa from '../../../types/Empresa'; 
 
 // Define las props del componente de modal de empresa
 interface ModalEmpresaProps {
@@ -42,9 +42,9 @@ const ModalEmpresa: React.FC<ModalEmpresaProps> = ({
   const handleSubmit = async (values: Empresa) => {
     try {
       if (isEditMode) {
-        await empresaService.put(`${URL}/empresa`, values.id, values); // Actualiza la empresa si está en modo de edición
+        await empresaService.put(`${URL}/empresas`, values.id.toString(), values); // Actualiza la empresa si está en modo de edición
       } else {
-        await empresaService.post(`${URL}/empresa`, values); // Agrega una nueva empresa si no está en modo de edición
+        await empresaService.post(`${URL}/empresas`, values); // Agrega una nueva empresa si no está en modo de edición
       }
       getEmpresas(); // Actualiza la lista de empresas
     } catch (error) {
@@ -56,7 +56,6 @@ const ModalEmpresa: React.FC<ModalEmpresaProps> = ({
   if (!isEditMode) {
     initialValues = {
       id: 0,
-      eliminado:false,
       nombre: '',
       razonSocial: '',
       cuil: 0,

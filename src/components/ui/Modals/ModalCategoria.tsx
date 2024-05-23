@@ -8,7 +8,7 @@ import Swal from 'sweetalert2';
 import { CategoriaPost } from '../../../types/post/CategoriaPost';
 import SucursalService from '../../../services/SucursalService';
 import EmpresaService from '../../../services/EmpresaService';
-import ISucursal from '../../../types/ISucursal';
+import Sucursal from '../../../types/Sucursal';
 
 interface ModalCategoriaProps {
     modalName: string;
@@ -29,7 +29,7 @@ const ModalCategoria: React.FC<ModalCategoriaProps> = ({
 }) => {
     const categoriaService = new CategoriaService();
     const URL = import.meta.env.VITE_API_URL;
-    const [sucursales, setSucursales] = useState<ISucursal[]>([]);
+    const [sucursales, setSucursales] = useState<Sucursal[]>([]);
     const [selectedSucursales, setSelectedSucursales] = useState<number[]>([]);
     const [esInsumo, setEsInsumo] = useState<boolean>(initialValues.esInsumo); // Estado local para controlar el valor del checkbox
     const empresaService = new EmpresaService();
@@ -47,7 +47,7 @@ const ModalCategoria: React.FC<ModalCategoriaProps> = ({
 
     const fetchSucursales = async () => {
         try {
-            const sucursal = await sucursalService.get(`${url}/sucursal`, idSucursal) as ISucursal;
+            const sucursal = await sucursalService.get(`${url}/sucursal`, idSucursal) as Sucursal;
             const empresaid = sucursal.empresa.id;
             const empresa = await empresaService.get(`${url}/empresa/sucursales`, empresaid);
             const sucursales = empresa.sucursales;
@@ -136,7 +136,7 @@ const ModalCategoria: React.FC<ModalCategoriaProps> = ({
                 {!isEditMode && (
                     <>
                         <p>Selecciona las sucursales:</p>
-                        {sucursales.map((sucursal: ISucursal) => (
+                        {sucursales.map((sucursal: Sucursal) => (
                             <FormControlLabel
                                 key={sucursal.id}
                                 control={

@@ -3,12 +3,14 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import BaseNavbar from "../components/ui/common/Navbar/BaseNavbar";
 import BasicSidebar from "../components/ui/common/Sidebar/BasicSidebar";
 import "./routes.css";
-import Inicio from "../components/screens/Inicio/Inicio";
-import EmpresaComponent from "../components/screens/Empresa/EmpresaComponent";
-import SucursalComponent from "../components/screens/Sucursal/SucursalComponent";
-import Producto from "../components/screens/Producto/Producto";
-import Insumo from "../components/screens/Insumo/Insumo";
-import Categoria from "../components/screens/Categoria/Categoria";
+import Inicio from "../components/Screens/Inicio/Inicio";
+import Empresa from "../components/Screens/Empresa/Empresa";
+import Sucursal from "../components/Screens/Sucursal/Sucursal";
+import Producto from "../components/Screens/Producto/Producto";
+import Insumo from "../components/Screens/Insumo/Insumo";
+
+import Categoria from "../components/Screens/Categoria/Categoria";
+import Promocion from "../components/Screens/Promocion/Promocion";
 
 const AppRouter: React.FC = () => {
   return (
@@ -22,11 +24,11 @@ const AppRouter: React.FC = () => {
       <div className="content">
         <Routes>
           <Route path="/" element={<Inicio />} />
-          <Route path="/empresas" element={<EmpresaComponent />} />
-          <Route path="/empresas/:empresaId" element={<SucursalComponent />} />
+          <Route path="/empresas" element={<Empresa />} />
+          <Route path="/empresas/:empresaId" element={<Sucursal />} />
           <Route path="/productos" element={<Producto />} />
           <Route path="/insumos" element={<Insumo />} />
-          {/* <Route path="/promociones" element={<Promocion />} /> */}
+          <Route path="/promociones" element={<Promocion />} />
           <Route path="/categorias" element={<Categoria />} />
         </Routes>
       </div>

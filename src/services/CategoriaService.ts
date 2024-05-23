@@ -1,6 +1,6 @@
-
-import { ICategoria } from "../types/Categoria";
-import { CategoriaPost } from "../types/post/CategoriaPost";
+// Importamos el tipo de dato ICategoria y la clase BackendClient
+import ICategoria from "../types/Categoria";
 import  BackendClient  from "./BackendClient";
 
-export default class CategoriaService extends BackendClient<ICategoria | CategoriaPost> {}
+// Clase CategoriaService que extiende BackendClient para interactuar con la API de personas
+export default class CategoriaService extends BackendClient<ICategoria> {}

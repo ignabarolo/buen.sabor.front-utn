@@ -1,5 +1,5 @@
 // Importamos el tipo de dato IEmpresa y la clase BackendClient
-import IEmpresa from "../types/IEmpresa";
+import IEmpresa from "../types/Empresa";
 import  BackendClient  from "./BackendClient";
 
 // Clase EmpresaService que extiende BackendClient para interactuar con la API de personas
