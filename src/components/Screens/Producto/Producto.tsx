@@ -9,6 +9,9 @@ import Row from "../../../types/Row";
 import Column from "../../../types/Column";
 import SearchBar from "../../ui/common/SearchBar/SearchBar";
 import TableComponent from "../../ui/Table/Table";
+import ModalProducto from "../../ui/Modals/ModalProducto";
+import IArticuloManufacturado from "../../../types/ArticuloManufacturado";
+import { toggleModal } from "../../../redux/slices/ModalReducer";
 
 
 const Producto = () => {
@@ -19,6 +22,9 @@ const Producto = () => {
   const globalProducto = useAppSelector(
     (state) => state.producto.data
   );
+  
+  const [isEditing, setIsEditing] = useState(false);
+  const [productoaEditar, setProductoaEditar] = useState<IArticuloManufacturado>();
 
   const [filteredData, setFilteredData] = useState<Row[]>([]);
 
@@ -69,6 +75,11 @@ const Producto = () => {
     console.log("Editar producto en el índice", index);
   };
 
+  const handleAddProducto = () => {
+    setIsEditing(false); 
+    dispatch(toggleModal({ modalName: "modal" }));
+  };
+
   // Definición de las columnas para la tabla de artículos manufacturados
   const columns: Column[] = [
     {
@@ -100,6 +111,7 @@ const Producto = () => {
             Productos
           </Typography>
           <Button
+            onClick={handleAddProducto}
             sx={{
               bgcolor: "#E66200",
               "&:hover": {
@@ -118,6 +130,21 @@ const Producto = () => {
         </Box>
         {/* Componente de tabla para mostrar los artículos manufacturados */}
         <TableComponent data={filteredData} columns={columns} onDelete={onDeleteProducto} onEdit={handleEdit} />
+        <ModalProducto 
+        modalName="modal" 
+        initialValues={{
+        id: productoaEditar ? productoaEditar.id: 0,
+        denominacion: productoaEditar ? productoaEditar.denominacion:'',
+        precioVenta: productoaEditar ? productoaEditar.precioVenta: 0,
+        imagenes: productoaEditar ? [{ id: 0, url: productoaEditar.imagenes.length > 0 ? productoaEditar.imagenes[0].url : '' }] : [{ id: 0, url: '' }],
+        unidadMedida: productoaEditar ? productoaEditar.unidadMedida : { id: 0, denominacion: "" },
+        descripcion: productoaEditar ? productoaEditar.denominacion:'',
+        tiempoEstimadoMinutos: productoaEditar ? productoaEditar.tiempoEstimadoMinutos:0,
+        preparacion: productoaEditar ? productoaEditar.preparacion:'',
+        articuloManufacturadoDetalles: productoaEditar ? productoaEditar.articuloManufacturadoDetalles: [{ id: 0, cantidad:0, articuloInsumo: {id:0, denominacion:'', precioVenta:0, imagenes: [{ id: 0, url: '' }], unidadMedida: { id: 0, denominacion: "" }, precioCompra:0, stockActual:0, stockMaximo:0, stockMinimo:0, esParaElaborar: true }}]
+        }}
+        isEditMode={isEditing} 
+        getProductos={fetchProductos} />
       </Container>
     </Box>
   );
