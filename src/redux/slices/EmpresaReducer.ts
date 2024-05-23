@@ -1,4 +1,4 @@
-import Empresa from '../../types/Empresa';
+import Empresa from '../../types/IEmpresa';
 import { createGenericSlice } from './GenericReducer';
 
 

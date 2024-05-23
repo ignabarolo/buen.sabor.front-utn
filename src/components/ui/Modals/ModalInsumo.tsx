@@ -1,20 +1,20 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import * as Yup from 'yup';
+import { MenuItem, Select, FormControl, Checkbox, FormControlLabel, Grid } from '@mui/material';
 import GenericModal from './GenericModal';
 import TextFieldValue from '../TextFieldValue/TextFieldValue';
-import IArticuloInsumo from '../../../types/ArticuloInsumo';
 import InsumoService from '../../../services/InsumoService';
-import UnidadesMedidasService from '../../../services/UnidadesMedidasService';
-import { useAppDispatch, useAppSelector } from '../../../hooks/redux';
-import { setUnidadMedida } from '../../../redux/slices/UnidadMedidaReducer';
-import { Field } from 'formik';
+import UnidadMedidaService from '../../../services/UnidadMedidaService';
+import Swal from 'sweetalert2';
+import { InsumoPost } from '../../../types/post/InsumoPost';
+import CategoriaService from '../../../services/CategoriaService';
 
 interface ModalInsumoProps {
     modalName: string;
-    initialValues: IArticuloInsumo;
+    initialValues: any;
     isEditMode: boolean;
     getInsumos: Function;
-    insumoAEditar?: IArticuloInsumo;
+    insumoAEditar?: any;
 }
 
 const ModalInsumo: React.FC<ModalInsumoProps> = ({
@@ -25,168 +25,201 @@ const ModalInsumo: React.FC<ModalInsumoProps> = ({
     insumoAEditar,
 }) => {
     const insumoService = new InsumoService();
+    const unidadMedidaService = new UnidadMedidaService();
     const URL = import.meta.env.VITE_API_URL;
-    const dispatch = useAppDispatch();
-    const unidadMedidaService = new UnidadesMedidasService();
-    const globalUnidadMedida = useAppSelector(
-        (state) => state.unidadMedida.data
-    );
+    const categoriaService = new CategoriaService();
 
-    useEffect(() => {
-        const fetchUnidadesMedida = async () => {
-            try {
-                const um = await unidadMedidaService.getAll(
-                    `${URL}/unidadesMedidas`
-                );
-                dispatch(setUnidadMedida(um));
-            } catch (error) {
-                console.error('Error al obtener las unidades de medida:', error);
-            }
-        };
+    const [unidadMedidaOptions, setUnidadMedidaOptions] = useState<{ id: number; denominacion: string }[]>([]);
+    const [unidadMedida, setUnidadMedida] = useState<number>(initialValues.idUnidadMedida || 0);
+    const [categoria, setCategoria] = useState<number>(initialValues.idCategoria || 0);
+    const [esParaElaborar, setEsParaElaborar] = useState<boolean>(initialValues.esParaElaborar || false);
+    const [categoriaOptions, setCategoriaOptions] = useState<any []>([]);
 
-        fetchUnidadesMedida();
-    }, [dispatch]);
+    const fetchUnidadesMedida = async () => {
+        try {
+            const unidadesMedida = await unidadMedidaService.getAll(`${URL}/UnidadMedida`);
+            setUnidadMedidaOptions(unidadesMedida);
+        } catch (error) {
+            console.error('Error al obtener las unidades de medida:', error);
+        }
+    };
+
+
+    const fetchCategorias = async () => {
+        try {
+            const categorias = await categoriaService.getAll(`${URL}/categoria`);
+            setCategoriaOptions(categorias.filter(categoria => categoria.esInsumo));
+        } catch (error) {
+            console.error('Error al obtener las categorías:', error);
+        }
+    };
 
     const validationSchema = Yup.object().shape({
         denominacion: Yup.string().required('Campo requerido'),
-        precioVenta: Yup.number()
-            .required('Campo requerido')
-            .positive('El precio debe ser positivo'),
-        precioCompra: Yup.number()
-            .required('Campo requerido')
-            .positive('El precio debe ser positivo'),
+        precioVenta: Yup.number().required('Campo requerido'),
+        precioCompra: Yup.number().required('Campo requerido').positive('El precio de compra debe ser un número positivo'),
         stockActual: Yup.number()
             .required('Campo requerido')
-            .integer('El stock debe ser un número entero')
+            .positive('El stock actual debe ser un número positivo')
             .min(Yup.ref('stockMinimo'), 'El stock no puede ser menor que el stock mínimo')
-            .max(Yup.ref('stockMaximo'), 'El stock no puede ser mayor que el stock máximo')
-            .min(0, 'El stock debe ser mayor o igual a 0'),
-        stockMaximo: Yup.number()
-            .required('Campo requerido')
-            .integer('El stock debe ser un número entero')
-            .min(0, 'El stock máximo debe ser mayor o igual a 0'),
-        stockMinimo: Yup.number()
-            .required('Campo requerido')
-            .integer('El stock debe ser un número entero')
-            .min(0, 'El stock mínimo debe ser mayor o igual a 0'),
-        esParaElaborar: Yup.boolean().required('Campo requerido'),
-        url: Yup.string().url('Debe ser una URL válida'),
+            .max(Yup.ref('stockMaximo'), 'El stock no puede ser mayor que el stock máximo'),
+        stockMaximo: Yup.number().required('Campo requerido').positive('El stock máximo debe ser un número positivo'),
+        stockMinimo: Yup.number().required('Campo requerido').positive('El stock mínimo debe ser un número positivo'),
     });
 
-    const handleSubmit = async (values: IArticuloInsumo) => {
+    const handleSubmit = async (values: InsumoPost) => {
+        console.log(values)
         try {
-            if (isEditMode) {
-                await insumoService.put(
-                    `${URL}/articulosInsumos`,
-                    values.id.toString(),
-                    values
-                );
+            const insumoPost = {
+                denominacion: values.denominacion,
+                precioVenta: values.precioVenta,
+                precioCompra: values.precioCompra,
+                stockActual: values.stockActual,
+                stockMaximo: values.stockMaximo,
+                stockMinimo: values.stockMinimo,
+                imagenes: [],
+                idUnidadMedida: unidadMedida,
+                esParaElaborar: esParaElaborar,
+                idCategoria: categoria,
+            };
+
+            console.log(insumoPost);
+
+            let response;
+
+
+            if (isEditMode && insumoAEditar) {
+                response = await insumoService.put(`${URL}/ArticuloInsumo`, insumoAEditar.id, insumoPost);
+                getInsumos();
             } else {
-                await insumoService.post(`${URL}/articulosInsumos`, values);
+                response = await insumoService.post(`${URL}/ArticuloInsumo`, insumoPost);
+                getInsumos();
             }
-            getInsumos();
+
+            if (response) {
+                Swal.fire({
+                    title: '¡Éxito!',
+                    text: isEditMode ? 'Insumo editado correctamente' : 'Insumo creado correctamente',
+                    icon: 'success',
+                });
+                getInsumos();
+            } else {
+                throw new Error('No se recibió una respuesta del servidor.');
+            }
         } catch (error) {
             console.error('Error al enviar los datos:', error);
+            Swal.fire({
+                title: 'Error',
+                text: 'Ha ocurrido un error al enviar los datos',
+                icon: 'error',
+            });
         }
     };
+
+    useEffect(() => {
+        fetchCategorias();
+        fetchUnidadesMedida();
+        if (isEditMode && insumoAEditar) {
+            setUnidadMedida(insumoAEditar.idUnidadMedida);
+            setCategoria(insumoAEditar.idCategoria);
+            setEsParaElaborar(insumoAEditar.esParaElaborar);
+        }
+    }, [isEditMode, insumoAEditar]);
 
     return (
         <GenericModal
             modalName={modalName}
-            title={
-                isEditMode
-                    ? 'Editar Artículo de Insumo'
-                    : 'Añadir Artículo de Insumo'
-            }
+            title={isEditMode ? 'Editar Insumo' : 'Añadir Insumo'}
             initialValues={insumoAEditar || initialValues}
             validationSchema={validationSchema}
             onSubmit={handleSubmit}
             isEditMode={isEditMode}
         >
-            <TextFieldValue
-                label="Denominación"
-                name="denominacion"
-                type="text"
-                placeholder="Denominación"
-            />
-            <div>
-                <label htmlFor="unidadMedida" style={{ marginRight: '8px', fontWeight: 'bold', fontSize: '0.9rem' }}>
-                    Unidad de Medida:
-                </label>
-                <Field
-                    as="select"
-                    name="unidadMedida.denominacion"
-                    id="unidadMedida"
-                    style={{ padding: '6px', paddingRight: '208px', borderRadius: '4px', border: '1px solid #ccc', marginBottom: '1rem' }}
-                >
-                    <option value="">Seleccione una unidad de medida</option>
-                    {globalUnidadMedida.map((unidadMedida) => (
-                        <option key={unidadMedida.id} value={unidadMedida.denominacion}>
-                            {unidadMedida.denominacion}
-                        </option>
-                    ))}
-                </Field>
-            </div>
-            <TextFieldValue
-                label="Precio de Venta"
-                name="precioVenta"
-                type="number"
-                placeholder="Precio de Venta"
-            />
-            <TextFieldValue
-                label="Precio de Compra"
-                name="precioCompra"
-                type="number"
-                placeholder="Precio de Compra"
-            />
-            <TextFieldValue
-                label="Stock Actual"
-                name="stockActual"
-                type="number"
-                placeholder="Stock Actual"
-            />
-            <TextFieldValue
-                label="Stock Máximo"
-                name="stockMaximo"
-                type="number"
-                placeholder="Stock Máximo"
-            />
-            <TextFieldValue
-                label="Stock Mínimo"
-                name="stockMinimo"
-                type="number"
-                placeholder="Stock Mínimo"
-            />
-
-            <TextFieldValue
-                label="URL de la imagen"
-                name="imagenes[0].url"
-                type="text"
-                placeholder="URL de la imagen"
-            />
-
-            <div>
-                <label
-                    htmlFor="esParaElaborar"
-                    style={{
-                        display: 'inline-flex',
-                        alignItems: 'center',
-                        marginRight: '16px',
-                        cursor: 'pointer',
-                    }}
-                >
-                    <Field
-                        type="checkbox"
-                        name="esParaElaborar"
-                        id="esParaElaborar"
-                        style={{ marginRight: '8px' }}
-                    />
-                    Es para elaborar
-                </label>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                <Grid container spacing={2} alignItems="center">
+                    <Grid item xs={4}>
+                        <TextFieldValue label="Denominación" name="denominacion" type="text" placeholder="Denominación" disabled={isEditMode} />
+                    </Grid>
+                    <Grid item xs={4}>
+                        <TextFieldValue label="Precio de Venta" name="precioVenta" type="number" placeholder="Precio de Venta" />
+                    </Grid>
+                    <Grid item xs={4}>
+                        <TextFieldValue label="Precio de Venta" name="precioVenta" type="number" placeholder="Precio de Venta" />
+                    </Grid>
+                </Grid>
+                <Grid container spacing={2} alignItems="center">
+                    <Grid item xs={4}>
+                        <TextFieldValue label="Precio de Compra" name="precioCompra" type="number" placeholder="Precio de Compra" />
+                    </Grid>
+                    <Grid item xs={4}>
+                        <TextFieldValue label="Stock Actual" name="stockActual" type="number" placeholder="Stock Actual" />
+                    </Grid>
+                    <Grid item xs={4}>
+                        <TextFieldValue label="Stock Máximo" name="stockMaximo" type="number" placeholder="Stock Máximo" />
+                    </Grid>
+                </Grid>
+                <Grid container spacing={2} alignItems="center">
+                <Grid item xs={6}>
+                    <TextFieldValue label="Stock Mínimo" name="stockMinimo" type="number" placeholder="Stock Mínimo" />
+                </Grid>
+                <Grid item xs={6}>
+                    <FormControl fullWidth>
+                        <label className='label'>Unidad de Medida</label>
+                        <Select
+                            labelId="unidadMedidaLabel"
+                            id="unidadMedida"
+                            value={unidadMedida}
+                            onChange={(e) => setUnidadMedida(e.target.value as number)}
+                            displayEmpty
+                            disabled={isEditMode}
+                        >
+                            <MenuItem disabled value="">
+                                Seleccione una unidad de medida
+                            </MenuItem>
+                            {unidadMedidaOptions.map((unidad) => (
+                                <MenuItem key={unidad.id} value={unidad.id}>
+                                    {unidad.denominacion}
+                                </MenuItem>
+                            ))}
+                        </Select>
+                    </FormControl>
+                </Grid>
+                <Grid item xs={12}>
+                    <FormControl fullWidth>
+                        <label className='label' style={{ marginTop: '16px' }}>Categoría</label>
+                        <Select
+                            labelId="categoriaLabel"
+                            id="categoria"
+                            value={categoria}
+                            onChange={(e) => setCategoria(e.target.value as number)}
+                            displayEmpty
+                            disabled={isEditMode}
+                        >
+                            <MenuItem disabled value="">
+                                Seleccione una categoría
+                            </MenuItem>
+                            {categoriaOptions.map((categoria) => (
+                                <MenuItem key={categoria.id} value={categoria.id}>
+                                    {categoria.denominacion}
+                                </MenuItem>
+                            ))}
+                        </Select>
+                    </FormControl>
+                </Grid>
+                </Grid>
+                <FormControlLabel
+                    control={
+                        <Checkbox
+                            checked={esParaElaborar}
+                            onChange={(e) => setEsParaElaborar(e.target.checked)}
+                            name="esParaElaborar"
+                            disabled={isEditMode}
+                        />
+                    }
+                    label="Es para elaborar"
+                />
             </div>
         </GenericModal>
-
-
     );
 };
 

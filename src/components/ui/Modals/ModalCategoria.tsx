@@ -1,82 +1,158 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import * as Yup from 'yup';
-import GenericModal from './GenericModal'; 
-import TextFieldValue from '../TextFieldValue/TextFieldValue'; 
-import EmpresaService from '../../../services/EmpresaService'; 
-import Empresa from '../../../types/Empresa'; 
-import Categoria from '../../../types/Categoria';
+import { Checkbox, FormControlLabel } from '@mui/material';
+import GenericModal from './GenericModal';
+import TextFieldValue from '../TextFieldValue/TextFieldValue';
 import CategoriaService from '../../../services/CategoriaService';
+import Swal from 'sweetalert2';
+import { CategoriaPost } from '../../../types/post/CategoriaPost';
+import SucursalService from '../../../services/SucursalService';
+import EmpresaService from '../../../services/EmpresaService';
+import ISucursal from '../../../types/ISucursal';
 
-// Define las props del componente de modal de categoria
 interface ModalCategoriaProps {
-  modalName: string; // Nombre del modal
-  initialValues: Categoria; // Valores iniciales del formulario
-  isEditMode: boolean; // Indicador de modo de edición
-  getCategoria: Function; // Función para obtener categoria
-  categoriaAEditar?: Categoria; // Empresa a editar
+    modalName: string;
+    initialValues: CategoriaPost | any;
+    isEditMode: boolean;
+    getCategoria: () => void;
+    categoriaAEditar?: any;
+    idSucursal: number;
 }
 
-// Componente de modal de empresa
 const ModalCategoria: React.FC<ModalCategoriaProps> = ({
-  modalName,
-  initialValues,
-  isEditMode,
-  getCategoria,
-  categoriaAEditar,
+    modalName,
+    initialValues,
+    isEditMode,
+    getCategoria,
+    categoriaAEditar,
+    idSucursal
 }) => {
+    const categoriaService = new CategoriaService();
+    const URL = import.meta.env.VITE_API_URL;
+    const [sucursales, setSucursales] = useState<ISucursal[]>([]);
+    const [selectedSucursales, setSelectedSucursales] = useState<number[]>([]);
+    const [esInsumo, setEsInsumo] = useState<boolean>(initialValues.esInsumo); // Estado local para controlar el valor del checkbox
+    const empresaService = new EmpresaService();
+    const sucursalService = new SucursalService();
+    const url = import.meta.env.VITE_API_URL;
 
-  const categoriaSerivce = new CategoriaService(); // Instancia del servicio de categoria
-  const URL = import.meta.env.VITE_API_URL; // URL de la API
+    const validationSchema = Yup.object().shape({
+        denominacion: Yup.string().required('Campo requerido'),
+        esInsumo: Yup.boolean().required('Campo requerido'),
+    });
 
-  // Esquema de validación con Yup
-  const validationSchema = Yup.object().shape({
-    denominacion: Yup.string().required('Campo requerido'), // Campo denominacion requerido
-    articulos: Yup.string().required('Campo requerido'), // Campo articulos requerido
-    subCategorias: Yup.string().required('Campo requerido'), // Campo subCategoria requerido
-  });
+    useEffect(() => {
+        setEsInsumo(initialValues.esInsumo); // Actualizar el estado del checkbox cuando cambie initialValues
+    }, [initialValues]);
 
-
-
-  // Función para manejar el envío del formulario
-  const handleSubmit = async (values: Categoria) => {
-    try {
-      if (isEditMode) {
-        await categoriaSerivce.put(`${URL}/categorias`, values.id.toString(), values); // Actualiza la categoria si está en modo de edición
-      } else {
-        await categoriaSerivce.post(`${URL}/categorias`, values); // Agrega una nueva categoria si no está en modo de edición
-      }
-      getCategoria(); // Actualiza la lista de categorias
-    } catch (error) {
-      console.error('Error al enviar los datos:', error); // Manejo de errores
-    }
-  };
-
-  // Si no está en modo de edición, se limpian los valores iniciales
-  if (!isEditMode) {
-    initialValues = {
-      id: 0,
-      denominacion: '',
-      articulos: [],
-      subCategorias: [],
+    const fetchSucursales = async () => {
+        try {
+            const sucursal = await sucursalService.get(`${url}/sucursal`, idSucursal) as ISucursal;
+            const empresaid = sucursal.empresa.id;
+            const empresa = await empresaService.get(`${url}/empresa/sucursales`, empresaid);
+            const sucursales = empresa.sucursales;
+            console.log(empresa);
+            setSucursales(sucursales);
+        } catch (error) {
+            console.error("Error al obtener las sucursales:", error);
+        }
     };
-  }
 
-  // Renderiza el componente de modal genérico
-  return (
-    <GenericModal
-      modalName={modalName}
-      title={isEditMode ? 'Editar Categoria' : 'Añadir Categoria'}
-      initialValues={categoriaAEditar || initialValues} // Usa la categoria a editar si está disponible, de lo contrario, usa los valores iniciales
-      validationSchema={validationSchema}
-      onSubmit={handleSubmit}
-      isEditMode={isEditMode}
-    >
-      {/* Campos del formulario */}
-      <TextFieldValue label="Denominacion" name="denominacion" type="text" placeholder="Denominacion" />
-      <TextFieldValue label="Articulos" name="articulos" type="text" placeholder="Articulos" />
-      <TextFieldValue label="SubCategorias" name="subCategorias" type="text" placeholder="SubCategorias" />
-    </GenericModal>
-  );
+    useEffect(() => {
+        fetchSucursales();
+    }, [idSucursal]);
+
+    const handleSubmit = async (values: CategoriaPost) => {
+        try {
+            if (selectedSucursales.length > 0) {
+                const categoriaPost = {
+                    denominacion: values.denominacion,
+                    esInsumo: esInsumo, // Usar el valor de estado local
+                    idSucursales: selectedSucursales,
+                };
+
+                let response;
+
+                if (isEditMode && categoriaAEditar) {
+                    response = await categoriaService.put(`${URL}/categoria`, categoriaAEditar.id, categoriaPost);
+                    getCategoria();
+                } else {
+                    response = await categoriaService.post(`${URL}/categoria`, categoriaPost);
+                    getCategoria();
+                }
+
+                if (response) {
+                    Swal.fire({
+                        title: '¡Éxito!',
+                        text: isEditMode ? 'Categoría editada correctamente' : 'Categoría creada correctamente',
+                        icon: 'success',
+                    });
+                    getCategoria(); // Refresh the category list
+                } else {
+                    throw new Error('No se recibió una respuesta del servidor.');
+                }
+            } else {
+                throw new Error('Debe seleccionar al menos una sucursal.');
+            }
+        } catch (error) {
+            console.error('Error al enviar los datos:', error);
+            Swal.fire({
+                title: 'Error',
+                icon: 'error',
+            });
+        }
+    };
+
+    const handleToggleSucursal = (sucursalId: number) => {
+        if (selectedSucursales.includes(sucursalId)) {
+            setSelectedSucursales(selectedSucursales.filter(id => id !== sucursalId));
+        } else {
+            setSelectedSucursales([...selectedSucursales, sucursalId]);
+        }
+    };
+
+    return (
+        <GenericModal
+            modalName={modalName}
+            title={isEditMode ? 'Editar Categoría' : 'Añadir Categoría'}
+            initialValues={categoriaAEditar || initialValues}
+            validationSchema={validationSchema}
+            onSubmit={handleSubmit}
+            isEditMode={isEditMode}
+        >
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                <TextFieldValue label="Denominación" name="denominacion" type="text" placeholder="Denominación" />
+                <FormControlLabel
+                    control={
+                        <Checkbox
+                            name="esInsumo"
+                            checked={esInsumo} // Usar el estado local para el valor del checkbox
+                            onChange={() => setEsInsumo(!esInsumo)} // Invertir el valor del estado local cuando se cambia el checkbox
+                            disabled={isEditMode}
+                        />
+                    }
+                    label="Es insumo"
+                />
+                {!isEditMode && (
+                    <>
+                        <p>Selecciona las sucursales:</p>
+                        {sucursales.map((sucursal: ISucursal) => (
+                            <FormControlLabel
+                                key={sucursal.id}
+                                control={
+                                    <Checkbox
+                                        checked={selectedSucursales.includes(sucursal.id)}
+                                        onChange={() => handleToggleSucursal(sucursal.id)}
+                                    />
+                                }
+                                label={sucursal.nombre}
+                            />
+                        ))}
+                    </>
+                )}
+            </div>
+        </GenericModal>
+    );
 };
 
-export default ModalCategoria; // Exporta el componente ModalCategoria
+export default ModalCategoria;

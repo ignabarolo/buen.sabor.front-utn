@@ -1,6 +1,6 @@
-// Importamos el tipo de dato IInsumo y la clase BackendClient
-import IInsumo from "../types/ArticuloInsumo";
+
+import { IInsumo } from "../types/IInsumo";
+import { InsumoPost } from "../types/post/InsumoPost";
 import  BackendClient  from "./BackendClient";
 
-// Clase InsumoService que extiende BackendClient para interactuar con la API de personas
-export default class InsumoService extends BackendClient<IInsumo> {}
+export default class InsumoService extends BackendClient<IInsumo | InsumoPost> {}
