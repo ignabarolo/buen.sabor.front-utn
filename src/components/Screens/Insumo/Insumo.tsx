@@ -14,7 +14,6 @@ import TableComponent from "../../ui/Table/Table";
 import ModalInsumo from "../../ui/Modals/ModalInsumo";
 import { toggleModal } from "../../../redux/slices/ModalReducer";
 
-
 const Insumo = () => {
   const dispatch = useAppDispatch();
   const globalArticulosInsumos = useAppSelector((state) => state.insumo.data);
@@ -26,7 +25,9 @@ const Insumo = () => {
 
   const fetchArticulosInsumos = async () => {
     try {
-      const articulosInsumos = await insumoService.getAll(url + '/articulosInsumos');
+      const articulosInsumos = await insumoService.getAll(
+        url + "/ArticuloInsumo"
+      );
       dispatch(setInsumo(articulosInsumos));
       setFilteredData(articulosInsumos);
     } catch (error) {
@@ -39,7 +40,12 @@ const Insumo = () => {
   }, [dispatch]);
 
   const onSearch = (query: string) => {
-    handleSearch(query, globalArticulosInsumos, 'denominacion', setFilteredData);
+    handleSearch(
+      query,
+      globalArticulosInsumos,
+      "denominacion",
+      setFilteredData
+    );
   };
 
   const onDeleteInsumo = async (insumo: Row) => {
@@ -47,11 +53,13 @@ const Insumo = () => {
       await onDelete(
         insumo,
         async (insumoToDelete: Row) => {
-          await insumoService.delete(url + '/articulosInsumos', insumoToDelete.id.toString());
+          await insumoService.delete(
+            url + "/articulosInsumos",
+            insumoToDelete.id.toString()
+          );
         },
         fetchArticulosInsumos,
-        () => {
-        },
+        () => {},
         (error: any) => {
           console.error("Error al eliminar insumo:", error);
         }
@@ -63,7 +71,7 @@ const Insumo = () => {
 
   const handleEdit = (insumo: IArticuloInsumo) => {
     setIsEditing(true);
-    setInsumoEditar(insumo)
+    setInsumoEditar(insumo);
     dispatch(toggleModal({ modalName: "modal" }));
   };
 
@@ -72,8 +80,6 @@ const Insumo = () => {
     setIsEditing(false); // Establecer el modo de edición en false para agregar un nuevo artículo
     dispatch(toggleModal({ modalName: "modal" }));
   };
-
-
 
   const columns: Column[] = [
     {
@@ -87,10 +93,26 @@ const Insumo = () => {
         />
       ),
     },
-    { id: "denominacion", label: "Nombre", renderCell: (rowData) => <>{rowData.denominacion}</> },
-    { id: "precioCompra", label: "Precio de compra", renderCell: (rowData) => <>{rowData.precioCompra}</> },
-    { id: "precioVenta", label: "Precio de Venta", renderCell: (rowData) => <>{rowData.precioVenta}</> },
-    { id: "stock", label: "Stock", renderCell: (rowData) => <>{rowData.stockActual}</> },
+    {
+      id: "denominacion",
+      label: "Nombre",
+      renderCell: (rowData) => <>{rowData.denominacion}</>,
+    },
+    {
+      id: "precioCompra",
+      label: "Precio de compra",
+      renderCell: (rowData) => <>{rowData.precioCompra}</>,
+    },
+    {
+      id: "precioVenta",
+      label: "Precio de Venta",
+      renderCell: (rowData) => <>{rowData.precioVenta}</>,
+    },
+    {
+      id: "stock",
+      label: "Stock",
+      renderCell: (rowData) => <>{rowData.stockActual}</>,
+    },
     {
       id: "elaboracion",
       label: "¿Es para elaborar?",
@@ -101,7 +123,14 @@ const Insumo = () => {
   return (
     <Box component="main" sx={{ flexGrow: 1, my: 10 }}>
       <Container>
-        <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", my: 1 }}>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            my: 1,
+          }}
+        >
           <Typography variant="h5" gutterBottom>
             Insumos
           </Typography>
@@ -122,15 +151,32 @@ const Insumo = () => {
         <Box sx={{ mt: 2 }}>
           <SearchBar onSearch={onSearch} />
         </Box>
-        <TableComponent data={filteredData} columns={columns} onDelete={onDeleteInsumo} onEdit={handleEdit} />
+        <TableComponent
+          data={filteredData}
+          columns={columns}
+          onDelete={onDeleteInsumo}
+          onEdit={handleEdit}
+        />
         <ModalInsumo
           modalName="modal"
           initialValues={{
             id: insumoEditar ? insumoEditar.id : 0,
             denominacion: insumoEditar ? insumoEditar.denominacion : "",
             precioVenta: insumoEditar ? insumoEditar.precioVenta : 0,
-            imagenes: insumoEditar ? [{ id: 0, url: insumoEditar.imagenes.length > 0 ? insumoEditar.imagenes[0].url : '' }] : [{ id: 0, url: '' }],
-            unidadMedida: insumoEditar ? insumoEditar.unidadMedida : { id: 0, denominacion: "" },
+            imagenes: insumoEditar
+              ? [
+                  {
+                    id: 0,
+                    url:
+                      insumoEditar.imagenes.length > 0
+                        ? insumoEditar.imagenes[0].url
+                        : "",
+                  },
+                ]
+              : [{ id: 0, url: "" }],
+            unidadMedida: insumoEditar
+              ? insumoEditar.unidadMedida
+              : { id: 0, denominacion: "" },
             precioCompra: insumoEditar ? insumoEditar.precioCompra : 0,
             stockActual: insumoEditar ? insumoEditar.stockActual : 0,
             stockMaximo: insumoEditar ? insumoEditar.stockMaximo : 0,

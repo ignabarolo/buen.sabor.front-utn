@@ -10,22 +10,21 @@ import Column from "../../../types/Column";
 import SearchBar from "../../ui/common/SearchBar/SearchBar";
 import TableComponent from "../../ui/Table/Table";
 
-
 const Producto = () => {
   const url = import.meta.env.VITE_API_URL;
   const dispatch = useAppDispatch();
   const productoService = new ProductoService();
   // Estado global de Redux
-  const globalProducto = useAppSelector(
-    (state) => state.producto.data
-  );
+  const globalProducto = useAppSelector((state) => state.producto.data);
 
   const [filteredData, setFilteredData] = useState<Row[]>([]);
 
   // Función para obtener los productos
   const fetchProductos = async () => {
     try {
-      const productos = await productoService.getAll(url + '/articulosManufacturados');
+      const productos = await productoService.getAll(
+        url + "/ArticuloManufacturado"
+      );
       dispatch(setProducto(productos));
       setFilteredData(productos);
     } catch (error) {
@@ -37,24 +36,24 @@ const Producto = () => {
     fetchProductos();
   }, [dispatch]);
 
-
   // Llama a la función handleSearch cuando se realiza una búsqueda
   const onSearch = (query: string) => {
-    handleSearch(query, globalProducto, 'denominacion', setFilteredData);
+    handleSearch(query, globalProducto, "denominacion", setFilteredData);
   };
 
-  
   // Función para eliminar un producto
   const onDeleteProducto = async (producto: Row) => {
     try {
       await onDelete(
         producto,
         async (productoToDelete: Row) => {
-          await productoService.delete(url + '/articulosManufacturados', productoToDelete.id.toString());
+          await productoService.delete(
+            url + "/articulosManufacturados",
+            productoToDelete.id.toString()
+          );
         },
         fetchProductos,
-        () => {
-        },
+        () => {},
         (error: any) => {
           console.error("Error al eliminar producto:", error);
         }
@@ -63,8 +62,8 @@ const Producto = () => {
       console.error("Error al eliminar producto:", error);
     }
   };
-  
-  // Función para editar 
+
+  // Función para editar
   const handleEdit = (index: number) => {
     console.log("Editar producto en el índice", index);
   };
@@ -82,9 +81,21 @@ const Producto = () => {
         />
       ),
     },
-    { id: "denominacion", label: "Nombre", renderCell: (rowData) => <>{rowData.denominacion}</> },
-    { id: "precioVenta", label: "Precio", renderCell: (rowData) => <>{rowData.precioVenta}</> },
-    { id: "descripcion", label: "Descripción", renderCell: (rowData) => <>{rowData.descripcion}</> },
+    {
+      id: "denominacion",
+      label: "Nombre",
+      renderCell: (rowData) => <>{rowData.denominacion}</>,
+    },
+    {
+      id: "precioVenta",
+      label: "Precio",
+      renderCell: (rowData) => <>{rowData.precioVenta}</>,
+    },
+    {
+      id: "descripcion",
+      label: "Descripción",
+      renderCell: (rowData) => <>{rowData.descripcion}</>,
+    },
     {
       id: "tiempoEstimadoMinutos",
       label: "Tiempo estimado en minutos",
@@ -93,9 +104,16 @@ const Producto = () => {
   ];
 
   return (
-    <Box component="main" sx={{ flexGrow: 1, my: 10}}>
+    <Box component="main" sx={{ flexGrow: 1, my: 10 }}>
       <Container>
-        <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", my: 1 }}>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            my: 1,
+          }}
+        >
           <Typography variant="h5" gutterBottom>
             Productos
           </Typography>
@@ -117,7 +135,12 @@ const Producto = () => {
           <SearchBar onSearch={onSearch} />
         </Box>
         {/* Componente de tabla para mostrar los artículos manufacturados */}
-        <TableComponent data={filteredData} columns={columns} onDelete={onDeleteProducto} onEdit={handleEdit} />
+        <TableComponent
+          data={filteredData}
+          columns={columns}
+          onDelete={onDeleteProducto}
+          onEdit={handleEdit}
+        />
       </Container>
     </Box>
   );
