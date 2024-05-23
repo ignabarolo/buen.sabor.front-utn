@@ -13,25 +13,25 @@ import ModalProducto from "../../ui/Modals/ModalProducto";
 import IArticuloManufacturado from "../../../types/ArticuloManufacturado";
 import { toggleModal } from "../../../redux/slices/ModalReducer";
 
-
 const Producto = () => {
   const url = import.meta.env.VITE_API_URL;
   const dispatch = useAppDispatch();
   const productoService = new ProductoService();
   // Estado global de Redux
-  const globalProducto = useAppSelector(
-    (state) => state.producto.data
-  );
-  
+  const globalProducto = useAppSelector((state) => state.producto.data);
+
   const [isEditing, setIsEditing] = useState(false);
-  const [productoaEditar, setProductoaEditar] = useState<IArticuloManufacturado>();
+  const [productoaEditar, setProductoaEditar] =
+    useState<IArticuloManufacturado>();
 
   const [filteredData, setFilteredData] = useState<Row[]>([]);
 
   // Función para obtener los productos
   const fetchProductos = async () => {
     try {
-      const productos = await productoService.getAll(url + '/articulosManufacturados');
+      const productos = await productoService.getAll(
+        url + "/ArticuloManufacturado"
+      );
       dispatch(setProducto(productos));
       setFilteredData(productos);
     } catch (error) {
@@ -43,24 +43,24 @@ const Producto = () => {
     fetchProductos();
   }, [dispatch]);
 
-
   // Llama a la función handleSearch cuando se realiza una búsqueda
   const onSearch = (query: string) => {
-    handleSearch(query, globalProducto, 'denominacion', setFilteredData);
+    handleSearch(query, globalProducto, "denominacion", setFilteredData);
   };
 
-  
   // Función para eliminar un producto
   const onDeleteProducto = async (producto: Row) => {
     try {
       await onDelete(
         producto,
         async (productoToDelete: Row) => {
-          await productoService.delete(url + '/articulosManufacturados', productoToDelete.id.toString());
+          await productoService.delete(
+            url + "/articulosManufacturados",
+            productoToDelete.id.toString()
+          );
         },
         fetchProductos,
-        () => {
-        },
+        () => {},
         (error: any) => {
           console.error("Error al eliminar producto:", error);
         }
@@ -69,14 +69,14 @@ const Producto = () => {
       console.error("Error al eliminar producto:", error);
     }
   };
-  
-  // Función para editar 
+
+  // Función para editar
   const handleEdit = (index: number) => {
     console.log("Editar producto en el índice", index);
   };
 
   const handleAddProducto = () => {
-    setIsEditing(false); 
+    setIsEditing(false);
     dispatch(toggleModal({ modalName: "modal" }));
   };
 
@@ -93,9 +93,21 @@ const Producto = () => {
         />
       ),
     },
-    { id: "denominacion", label: "Nombre", renderCell: (rowData) => <>{rowData.denominacion}</> },
-    { id: "precioVenta", label: "Precio", renderCell: (rowData) => <>{rowData.precioVenta}</> },
-    { id: "descripcion", label: "Descripción", renderCell: (rowData) => <>{rowData.descripcion}</> },
+    {
+      id: "denominacion",
+      label: "Nombre",
+      renderCell: (rowData) => <>{rowData.denominacion}</>,
+    },
+    {
+      id: "precioVenta",
+      label: "Precio",
+      renderCell: (rowData) => <>{rowData.precioVenta}</>,
+    },
+    {
+      id: "descripcion",
+      label: "Descripción",
+      renderCell: (rowData) => <>{rowData.descripcion}</>,
+    },
     {
       id: "tiempoEstimadoMinutos",
       label: "Tiempo estimado en minutos",
@@ -104,9 +116,16 @@ const Producto = () => {
   ];
 
   return (
-    <Box component="main" sx={{ flexGrow: 1, my: 10}}>
+    <Box component="main" sx={{ flexGrow: 1, my: 10 }}>
       <Container>
-        <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", my: 1 }}>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            my: 1,
+          }}
+        >
           <Typography variant="h5" gutterBottom>
             Productos
           </Typography>
@@ -129,22 +148,61 @@ const Producto = () => {
           <SearchBar onSearch={onSearch} />
         </Box>
         {/* Componente de tabla para mostrar los artículos manufacturados */}
-        <TableComponent data={filteredData} columns={columns} onDelete={onDeleteProducto} onEdit={handleEdit} />
-        <ModalProducto 
-        modalName="modal" 
-        initialValues={{
-        id: productoaEditar ? productoaEditar.id: 0,
-        denominacion: productoaEditar ? productoaEditar.denominacion:'',
-        precioVenta: productoaEditar ? productoaEditar.precioVenta: 0,
-        imagenes: productoaEditar ? [{ id: 0, url: productoaEditar.imagenes.length > 0 ? productoaEditar.imagenes[0].url : '' }] : [{ id: 0, url: '' }],
-        unidadMedida: productoaEditar ? productoaEditar.unidadMedida : { id: 0, denominacion: "" },
-        descripcion: productoaEditar ? productoaEditar.denominacion:'',
-        tiempoEstimadoMinutos: productoaEditar ? productoaEditar.tiempoEstimadoMinutos:0,
-        preparacion: productoaEditar ? productoaEditar.preparacion:'',
-        articuloManufacturadoDetalles: productoaEditar ? productoaEditar.articuloManufacturadoDetalles: [{ id: 0, cantidad:0, articuloInsumo: {id:0, denominacion:'', precioVenta:0, imagenes: [{ id: 0, url: '' }], unidadMedida: { id: 0, denominacion: "" }, precioCompra:0, stockActual:0, stockMaximo:0, stockMinimo:0, esParaElaborar: true }}]
-        }}
-        isEditMode={isEditing} 
-        getProductos={fetchProductos} />
+        <TableComponent
+          data={filteredData}
+          columns={columns}
+          onDelete={onDeleteProducto}
+          onEdit={handleEdit}
+        />
+        <ModalProducto
+          modalName="modal"
+          initialValues={{
+            id: productoaEditar ? productoaEditar.id : 0,
+            denominacion: productoaEditar ? productoaEditar.denominacion : "",
+            precioVenta: productoaEditar ? productoaEditar.precioVenta : 0,
+            imagenes: productoaEditar
+              ? [
+                  {
+                    id: 0,
+                    url:
+                      productoaEditar.imagenes.length > 0
+                        ? productoaEditar.imagenes[0].url
+                        : "",
+                  },
+                ]
+              : [{ id: 0, url: "" }],
+            unidadMedida: productoaEditar
+              ? productoaEditar.unidadMedida
+              : { id: 0, denominacion: "" },
+            descripcion: productoaEditar ? productoaEditar.denominacion : "",
+            tiempoEstimadoMinutos: productoaEditar
+              ? productoaEditar.tiempoEstimadoMinutos
+              : 0,
+            preparacion: productoaEditar ? productoaEditar.preparacion : "",
+            articuloManufacturadoDetalles: productoaEditar
+              ? productoaEditar.articuloManufacturadoDetalles
+              : [
+                  {
+                    id: 0,
+                    cantidad: 0,
+                    articuloInsumo: {
+                      id: 0,
+                      denominacion: "",
+                      precioVenta: 0,
+                      imagenes: [{ id: 0, url: "" }],
+                      unidadMedida: { id: 0, denominacion: "" },
+                      precioCompra: 0,
+                      stockActual: 0,
+                      stockMaximo: 0,
+                      stockMinimo: 0,
+                      esParaElaborar: true,
+                    },
+                  },
+                ],
+          }}
+          isEditMode={isEditing}
+          getProductos={fetchProductos}
+        />
       </Container>
     </Box>
   );

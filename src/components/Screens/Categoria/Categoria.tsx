@@ -34,7 +34,7 @@ const Categoria = () => {
   const [showSubcategoriaModal, setShowSubcategoriaModal] =
     useState<boolean>(false); // Estado para controlar la visibilidad del modal de subcategoría
   const [categoriaPadre, setCategoriaPadre] = useState<ICategoria | null>(null);
-  
+
   const [isEditing, setIsEditing] = useState(false);
   const [categoriaAEditar, setCategoriaAEditar] = useState<Row>();
 
@@ -91,15 +91,10 @@ const Categoria = () => {
     dispatch(toggleModal({ modalName: "modal" }));
   };
 
-  const handleOpenSubcategoriaModal = (categoria: ICategoria) => {
-    setCategoriaPadre(categoria);
-    setShowSubcategoriaModal(true);
-  };
-
-  const handleCloseSubcategoriaModal = () => {
-    setShowSubcategoriaModal(false);
-    setCategoriaPadre(null); // Limpiamos la categoría padre
-  };
+  //   const handleCloseSubcategoriaModal = () => {
+  //     setShowSubcategoriaModal(false);
+  //     setCategoriaPadre(null); // Limpiamos la categoría padre
+  //   };
 
   // Definición de las columnas para la tabla de categorías
   const columns: Column[] = [
@@ -132,16 +127,7 @@ const Categoria = () => {
     {
       id: "agregarSubcategoria",
       label: "Agregar Subcategoría",
-      renderCell: (rowData) => (
-        <Button
-          onClick={() => handleOpenSubcategoriaModal(rowData.subCategoria)} // Abre el modal de subcategoría pasando la categoría padre
-          variant="outlined"
-          color="primary"
-          startIcon={<Add />}
-        >
-          Agregar
-        </Button>
-      ),
+      renderCell: (rowData) => <> {rowData.subcategoria} </>,
     },
     {
       id: "articulos",
@@ -202,16 +188,19 @@ const Categoria = () => {
           onEdit={handleEdit}
           onDelete={onDeleteCategoria}
         />
-        <ModalCategoria 
-        modalName="modal" 
-        initialValues={{
-        id: categoriaAEditar ? categoriaAEditar.id: 0,
-        denominacion: categoriaAEditar ? categoriaAEditar.denominacion:'',
-        articulos: categoriaAEditar ? categoriaAEditar.articulos: [],
-        subCategorias: categoriaAEditar ? categoriaAEditar.subCategorias: [{id:0, denominacion:'', articulos:[], subCategorias:[]}]
-        }}
-        isEditMode={isEditing} 
-        getCategoria={fetchCategorias} />
+        <ModalCategoria
+          modalName="modal"
+          initialValues={{
+            id: categoriaAEditar ? categoriaAEditar.id : 0,
+            denominacion: categoriaAEditar ? categoriaAEditar.denominacion : "",
+            articulos: categoriaAEditar ? categoriaAEditar.articulos : [],
+            subCategorias: categoriaAEditar
+              ? categoriaAEditar.subCategorias
+              : [{ id: 0, denominacion: "", articulos: [], subCategorias: [] }],
+          }}
+          isEditMode={isEditing}
+          getCategoria={fetchCategorias}
+        />
       </Container>
     </Box>
   );
