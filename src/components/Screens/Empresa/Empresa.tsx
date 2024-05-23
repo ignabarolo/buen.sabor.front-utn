@@ -107,10 +107,7 @@ const EmpresaComponent = () => {
   return (
     <Box component="main" sx={{ flexGrow: 1, my: 10}}>
       <Container>
-        <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", my: 1 }}>
-          <Typography variant="h5" gutterBottom>
-            Empresas
-          </Typography>
+        <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", my: 3 }}>
           <Button
             onClick={handleAddEmpresa}
             sx={{
@@ -118,6 +115,7 @@ const EmpresaComponent = () => {
               "&:hover": {
                 bgcolor: "#494948",
               },
+              padding:3
             }}
             variant="contained"
             startIcon={<Add />}
