@@ -6,7 +6,13 @@ import {
   Container,
   Tooltip,
   IconButton,
+  Card,
+  CardMedia,
+  CardContent,
+  CardActions,
 } from "@mui/material";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
 import { Add, Visibility, AddCircle } from "@mui/icons-material";
 import { useAppDispatch, useAppSelector } from "../../../hooks/redux";
 import { setEmpresa } from "../../../redux/slices/EmpresaReducer";
@@ -20,6 +26,7 @@ import { handleSearch, onDelete } from "../../../utils/utils";
 import SearchBar from "../../ui/common/SearchBar/SearchBar";
 import TableComponent from "../../ui/Table/Table";
 import ModalEmpresa from "../../ui/Modals/ModalEmpresa";
+import styles from "./Empresa.module.css";
 
 const EmpresaComponent = () => {
   const url = import.meta.env.VITE_API_URL;
@@ -122,56 +129,99 @@ const EmpresaComponent = () => {
   ];
 
   return (
-    <Box component="main" sx={{ flexGrow: 1, my: 10 }}>
-      <Container>
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            my: 3,
-          }}
-        >
-          <Button
-            onClick={handleAddEmpresa}
+    <>
+      <Box component="main" sx={{ flexGrow: 1, my: 10 }}>
+        <Container>
+          <Box
             sx={{
-              bgcolor: "#E66200",
-              "&:hover": {
-                bgcolor: "#494948",
-              },
-              padding: 3,
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              my: 3,
             }}
-            variant="contained"
-            startIcon={<Add />}
           >
-            Empresa
-          </Button>
-        </Box>
-        <Box sx={{ mt: 2 }}>
-          <SearchBar onSearch={onSearch} />
-        </Box>
-        <TableComponent
-          data={filteredData}
-          columns={columns}
-          onDelete={onDeleteEmpresa}
-          onEdit={handleEdit}
-        />
-        <ModalEmpresa
-          modalName="modal"
-          initialValues={
-            empresaEditar || {
-              id: 0,
-              nombre: "",
-              razonSocial: "",
-              cuil: 0,
-              sucursales: [],
+            <Button
+              onClick={handleAddEmpresa}
+              sx={{
+                bgcolor: "#E66200",
+                "&:hover": {
+                  bgcolor: "#494948",
+                },
+                padding: 3,
+              }}
+              variant="contained"
+              startIcon={<Add />}
+            >
+              Empresa
+            </Button>
+          </Box>
+          <Box sx={{ mt: 2 }}>
+            <SearchBar onSearch={onSearch} />
+          </Box>
+          <div className={styles.containerPinricpalList}>
+            {/* Contenedor de la lista de héroes */}
+            <div className={styles.conatainerList}>
+              {/* Mapeo de la lista de héroes para mostrar cada héroe usando el componente CardHero */}
+              {filteredData.map((empre: Empresa) => (
+                <Card sx={{ maxWidth: 345 }}>
+                  <CardMedia
+                    sx={{ height: 140 }}
+                    image="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSF6a1U6f_BPXg-0_QqXFaT3MHgBQZWsqHZU1uBfb_Mqg&s"
+                    title="green iguana"
+                  />
+                  <CardContent>
+                    <Typography gutterBottom variant="h5" component="div">
+                      {empre.nombre}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      {empre.razonSocial}
+                    </Typography>
+                  </CardContent>
+                  <CardActions>
+                    <Tooltip title="Ver Sucursales">
+                      <IconButton
+                        component={Link}
+                        to={`/empresas/${empre.id}`}
+                        aria-label="Ver Sucursales"
+                      >
+                        <Visibility />
+                      </IconButton>
+                    </Tooltip>
+                    <Tooltip title="Ver Sucursales">
+                      <IconButton
+                        onClick={handleAddEmpresa}
+                        aria-label="Ver Sucursales"
+                      >
+                        <EditIcon />
+                      </IconButton>
+                    </Tooltip>
+                    <Tooltip title="Ver Sucursales">
+                      <IconButton>
+                        <DeleteIcon color="error" />
+                      </IconButton>
+                    </Tooltip>
+                  </CardActions>
+                </Card>
+              ))}
+            </div>
+          </div>
+          <ModalEmpresa
+            modalName="modal"
+            initialValues={
+              empresaEditar || {
+                id: 0,
+                nombre: "",
+                razonSocial: "",
+                cuil: 0,
+                sucursales: [],
+              }
             }
-          }
-          isEditMode={isEditing}
-          getEmpresas={fetchEmpresas}
-        />
-      </Container>
-    </Box>
+            isEditMode={isEditing}
+            getEmpresas={fetchEmpresas}
+          />
+        </Container>
+      </Box>
+    </>
   );
 };
 

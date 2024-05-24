@@ -18,16 +18,16 @@ const AppRouter: React.FC = () => {
       <div className="navbar">
         <BaseNavbar />
       </div>
-        <Routes>
-          <Route path="/" element={<Empresa />} />
-          <Route path="/empresas/:empresaId" element={<Sucursal />} />
-            <Route element={<BasicSidebar />} />
-            <Route path="/productos" element={<Producto />} />
-            <Route path="/insumos" element={<Insumo />} />
-            <Route path="/promociones" element={<Promocion />} />
-            <Route path="/categorias" element={<Categoria />} />
-          <Route/>
-        </Routes>
+      <Routes>
+        <Route path="/" element={<Empresa />} />
+        <Route path="/empresas/:empresaId" element={<Sucursal />} />
+        <Route element={<BasicSidebar />} />
+        <Route path="/productos" element={<Producto />} />
+        <Route path="/insumos" element={<Insumo />} />
+        <Route path="/promociones" element={<Promocion />} />
+        <Route path="/categorias" element={<Categoria />} />
+        <Route />
+      </Routes>
     </Router>
   );
 };

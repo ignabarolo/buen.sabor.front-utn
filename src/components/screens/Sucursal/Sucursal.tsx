@@ -1,7 +1,20 @@
 import React, { useEffect, useState } from "react";
-import { Box, Typography, Button, Container } from "@mui/material";
-import { Add } from "@mui/icons-material";
-import { useParams } from "react-router-dom";
+import {
+  Box,
+  Typography,
+  Button,
+  Container,
+  Card,
+  CardMedia,
+  CardContent,
+  CardActions,
+  Tooltip,
+  IconButton,
+} from "@mui/material";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
+import { Add, Visibility } from "@mui/icons-material";
+import { Link, useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../../hooks/redux";
 import Column from "../../../types/Column";
 import Sucursal from "../../../types/Sucursal";
@@ -13,6 +26,7 @@ import TableComponent from "../../ui/Table/Table";
 import { setSucursal } from "../../../redux/slices/SucursalReducer";
 import ModalSucursal from "../../ui/Modals/ModalSucursal";
 import SucursalService from "../../../services/SucursalService";
+import styles from "../Empresa/Empresa.module.css";
 
 const SucursalesEmpresa: React.FC = () => {
   const { empresaId } = useParams<{ empresaId: string }>();
@@ -130,14 +144,11 @@ const SucursalesEmpresa: React.FC = () => {
         <Box
           sx={{
             display: "flex",
-            justifyContent: "space-between",
+            justifyContent: "center",
             alignItems: "center",
-            my: 1,
+            my: 3,
           }}
         >
-          <Typography variant="h5" gutterBottom>
-            Sucursales de {nombreEmpresa}
-          </Typography>
           <Button
             onClick={handleAddSucursal}
             sx={{
@@ -145,22 +156,70 @@ const SucursalesEmpresa: React.FC = () => {
               "&:hover": {
                 bgcolor: "#494948",
               },
+              padding: 3,
             }}
             variant="contained"
             startIcon={<Add />}
           >
-            Sucursales
+            Sucursal
           </Button>
         </Box>
         <Box sx={{ mt: 2 }}>
           <SearchBar onSearch={onSearch} />
         </Box>
-        <TableComponent
-          data={filteredData}
-          columns={columns}
-          onDelete={onDelete}
-          onEdit={handleEdit}
-        />
+        <div className={styles.containerPinricpalList}>
+          {/* Contenedor de la lista de héroes */}
+          <div className={styles.conatainerList}>
+            {/* Mapeo de la lista de héroes para mostrar cada héroe usando el componente CardHero */}
+            {filteredData.map((sucu: Sucursal) => (
+              <Card sx={{ maxWidth: 345 }}>
+                <CardMedia
+                  sx={{ height: 140 }}
+                  image="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQsLhctfz5BIbUPSGl3iSfl9bHaNui1-t2BdnOBSYvrBg&s"
+                  title="green iguana"
+                />
+                <CardContent>
+                  <Typography gutterBottom variant="h5" component="div">
+                    {sucu.nombre}
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    Hora de apertura:
+                    {sucu.horarioApertura}
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    Hora de cierre:
+                    {sucu.horarioCierre}
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    ¿Es casa matriz?
+                  </Typography>
+                </CardContent>
+                <CardActions>
+                  <Tooltip title="Ver Sucursales">
+                    <IconButton
+                      component={Link}
+                      to={`/empresas/${sucu.id}`}
+                      aria-label="Ver Sucursales"
+                    >
+                      <Visibility />
+                    </IconButton>
+                  </Tooltip>
+                  <Tooltip title="Ver Sucursales">
+                    <IconButton aria-label="Ver Sucursales">
+                      <EditIcon />
+                    </IconButton>
+                  </Tooltip>
+                  <Tooltip title="Ver Sucursales">
+                    <IconButton>
+                      <DeleteIcon color="error" />
+                    </IconButton>
+                  </Tooltip>
+                </CardActions>
+              </Card>
+            ))}
+          </div>
+        </div>
+        {/*
         <ModalSucursal
           modalName="modal"
           initialValues={{
@@ -210,6 +269,7 @@ const SucursalesEmpresa: React.FC = () => {
           isEditMode={isEditing}
           getSucursales={fetchSucursales}
         />
+        */}
       </Container>
     </Box>
   );
