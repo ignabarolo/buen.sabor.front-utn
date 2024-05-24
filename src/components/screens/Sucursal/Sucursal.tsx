@@ -198,7 +198,7 @@ const SucursalesEmpresa: React.FC = () => {
                   <Tooltip title="Ver Sucursales">
                     <IconButton
                       component={Link}
-                      to={`/empresas/${sucu.id}`}
+                      to={`/`}
                       aria-label="Ver Sucursales"
                     >
                       <Visibility />
