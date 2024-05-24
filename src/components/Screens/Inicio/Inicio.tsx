@@ -8,22 +8,25 @@ import { useParams } from "react-router-dom";
 
 // Contenido para las tarjetas de inicio
 const productosContent = {
-    url: 'https://images.unsplash.com/photo-1615996001375-c7ef13294436?q=80&w=1471&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-    title: 'Productos',
-    content: 'Añade nuevos platos o actualiza los precios para mejorar la experiencia de tus clientes.',
-};
+    url: "https://w6h5a5r4.rocketcdn.me/wp-content/uploads/2019/06/pizza-con-chorizo-jamon-y-queso-1080x671.jpg",
+    title: "Productos",
+    content:
+      "Añade nuevos platos o actualiza los precios para mejorar la experiencia de tus clientes.",
+  };
+
+  const promocionesContent = {
+    url: "https://www.grandespymes.com.ar/wp-content/uploads/2020/07/promociones.jpg",
+    title: "Promociones",
+    content:
+      "Personaliza tus ofertas, haz que destaquen para que tus clientes no se resistan.",
+  };
 
 const insumosContent = {
-    url: 'https://images.unsplash.com/photo-1458917524587-d3236cc8c2c8?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    url: 'https://revistamj.com/wp-content/uploads/2020/08/278_FoodStorage101_Hero_2X-980x461.jpg',
     title: 'Insumos',
     content: 'Agrega, actualiza o elimina los insumos de tu sucursal'
 };
 
-const promocionesContent = {
-    url: 'https://images.unsplash.com/photo-1581495701295-13b43b0f4ae8?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-    title: 'Promociones',
-    content: 'Personaliza tus ofertas y haz que destaquen para que tus clientes no puedan resistirse.',
-};
 
 // Estilo para las tarjetas
 const cardStyle = {
