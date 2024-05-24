@@ -55,7 +55,7 @@ const EmpresaComponent = () => {
         empresa,
         async (empresaToDelete: Empresa) => {
           await empresaService.delete(
-            url + "/empresas",
+            url + "/empresa",
             empresaToDelete.id.toString()
           );
         },
@@ -88,11 +88,6 @@ const EmpresaComponent = () => {
       renderCell: (empresa) => <>{empresa.nombre}</>,
     },
     {
-      id: "id",
-      label: "id",
-      renderCell: (empresa) => <>{empresa.id}</>,
-    },
-    {
       id: "razonSocial",
       label: "Razón Social",
       renderCell: (empresa) => <>{empresa.razonSocial}</>,
@@ -112,6 +107,15 @@ const EmpresaComponent = () => {
               <Visibility />
             </IconButton>
           </Tooltip>
+          <Tooltip title="Agregar Sucursal">
+            <IconButton
+              component={Link}
+              to={`/agregar-sucursal/${empresa.id}`}
+              aria-label="Agregar Sucursal"
+            >
+              <AddCircle />
+            </IconButton>
+          </Tooltip>
         </>
       ),
     },
@@ -123,14 +127,11 @@ const EmpresaComponent = () => {
         <Box
           sx={{
             display: "flex",
-            justifyContent: "space-between",
+            justifyContent: "center",
             alignItems: "center",
-            my: 1,
+            my: 3,
           }}
         >
-          <Typography variant="h5" gutterBottom>
-            Empresas
-          </Typography>
           <Button
             onClick={handleAddEmpresa}
             sx={{
@@ -138,6 +139,7 @@ const EmpresaComponent = () => {
               "&:hover": {
                 bgcolor: "#494948",
               },
+              padding: 3,
             }}
             variant="contained"
             startIcon={<Add />}
