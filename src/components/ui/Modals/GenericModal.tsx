@@ -5,7 +5,7 @@ import * as Yup from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../redux/store/store'; 
 import { toggleModal } from '../../../redux/slices/ModalReducer';
-import Swal from 'sweetalert2'; 
+import Swal from 'sweetalert2';
 
 interface ModalProps {
   modalName: string;
@@ -70,10 +70,10 @@ const GenericModal: React.FC<ModalProps> = ({ modalName, title, initialValues, v
             <Form onSubmit={formikProps.handleSubmit}>
               {children}
               <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '20px' }}>
-                <Button variant="outlined" onClick={handleClose} style={{ marginRight: '10px', color: '#e91e63', borderColor: '#e91e63' }}>
+                <Button variant="outlined" onClick={handleClose} style={{ marginRight: '10px', color: '#ff0f0f', borderColor: '#ff0f0f' }}>
                   Cerrar
                 </Button>
-                <Button variant="contained" color="primary" type="submit" style={{ backgroundColor: '#e91e63', color: '#fff' }}>
+                <Button variant="contained" color="primary" type="submit" style={{ backgroundColor: '#299e29', color: '#fff' }}>
                   {isEditMode ? 'Guardar Cambios' : 'Añadir'} 
                   
                 </Button>

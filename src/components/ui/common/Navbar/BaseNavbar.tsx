@@ -12,6 +12,8 @@ import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import Divider from '@mui/material/Divider';
 import LoginOutlinedIcon from '@mui/icons-material/LoginOutlined';
 import { Link } from 'react-router-dom';
+import "../../../../Styles/Variables.css";
+import Styles from "../Navbar/BaseNavbar.module.css";
 
 export default function PrimarySearchAppBar() {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -44,16 +46,16 @@ export default function PrimarySearchAppBar() {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}><div><Person2OutlinedIcon sx={{mr: 1}}/></div>Perfil</MenuItem>
-      <MenuItem onClick={handleMenuClose}><div><SettingsOutlinedIcon sx={{mr: 1}} /></div>Ajustes</MenuItem>
+      <MenuItem onClick={handleMenuClose}><div><Person2OutlinedIcon sx={{mr: 1, color: '#E66200'}}/></div>Perfil</MenuItem>
+      <MenuItem onClick={handleMenuClose}><div><SettingsOutlinedIcon sx={{mr: 1, color:'#E66200}'}}/></div>Ajustes</MenuItem>
       <Divider/>
-      <MenuItem onClick={handleMenuClose}><div><LoginOutlinedIcon sx={{mr: 1}} /></div>Cerrar Sesión</MenuItem>
+      <MenuItem onClick={handleMenuClose}><div><LoginOutlinedIcon sx={{mr: 1, color: '#E66200'}}/></div>Cerrar Sesión</MenuItem>
     </Menu>
   );
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static" sx={{bgcolor: '#fb6376'}}>
+      <AppBar position="static" sx={{background: "#E66200"}}>
         <Toolbar>
           <Typography
             variant="h6"
