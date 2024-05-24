@@ -102,9 +102,9 @@ const Categoria: React.FC = () => {
                         color="secondary"
                         startIcon={<AddIcon />}
                         sx={{
-                            backgroundColor: '#fb6376',
+                            backgroundColor: '#E66200',
                             "&:hover": {
-                                bgcolor: "#d73754",
+                                bgcolor: "grey",
                             },
                         }}
                         onClick={handleAddCategoria}

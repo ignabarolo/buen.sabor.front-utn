@@ -107,9 +107,9 @@ const Producto = () => {
             variant="contained"
             startIcon={<Add />}
             sx={{
-              bgcolor: "#fb6376",
+              bgcolor: "#E66200",
               "&:hover": {
-                bgcolor: "#d73754",
+                bgcolor: "grey",
               },
               padding: "10px 20px",
               fontSize: "1.0rem",

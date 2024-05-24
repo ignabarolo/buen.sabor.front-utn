@@ -127,7 +127,7 @@ const TableUnidadMedida: React.FC = () => {
           value={denominacion}
           onChange={(e) => setDenominacion(e.target.value)}
         />
-        <Button sx={{ color: '#fb6376' }} onClick={handleAdd}>{editId !== null ? 'Actualizar' : 'Agregar'}</Button>
+        <Button sx={{ color: '#E66200' }} onClick={handleAdd}>{editId !== null ? 'Actualizar' : 'Agregar'}</Button>
       </Box>
       {units.length === 0 ? (
         <Box sx={{ my: 5 }}>

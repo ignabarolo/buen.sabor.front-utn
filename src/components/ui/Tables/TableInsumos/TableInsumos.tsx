@@ -114,9 +114,9 @@ const TableInsumo = () => {
                     <Box>
                         <Button
                             sx={{
-                                bgcolor: "#fb6376",
+                                bgcolor: "#E66200",
                                 "&:hover": {
-                                    bgcolor: "#d73754",
+                                    bgcolor: "grey",
                                 },
                                 mr: 1,
                                 padding: "10px 20px", 
