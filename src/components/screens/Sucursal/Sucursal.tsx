@@ -33,7 +33,7 @@ const SucursalesEmpresa: React.FC = () => {
       try {
         if (empresaId) {
           const empresa = await empresaService.get(
-            `${url}/empresas`,
+            `${url}/empresa/sucursales`,
             empresaId
           );
           if (empresa) {
