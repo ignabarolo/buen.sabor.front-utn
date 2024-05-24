@@ -16,7 +16,6 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { Add, Visibility, AddCircle } from "@mui/icons-material";
 import { useAppDispatch, useAppSelector } from "../../../hooks/redux";
 import { setEmpresa } from "../../../redux/slices/EmpresaReducer";
-
 import EmpresaService from "../../../services/EmpresaService";
 import Column from "../../../types/Column";
 import Empresa from "../../../types/Empresa";
@@ -143,7 +142,7 @@ const EmpresaComponent = () => {
             <Button
               onClick={handleAddEmpresa}
               sx={{
-                bgcolor: "#E66200",
+                bgcolor: "#e66200",
                 "&:hover": {
                   bgcolor: "#494948",
                 },
@@ -159,9 +158,9 @@ const EmpresaComponent = () => {
             <SearchBar onSearch={onSearch} />
           </Box>
           <div className={styles.containerPinricpalList}>
-            {/* Contenedor de la lista de héroes */}
+            {/* Contenedor de la lista de empresas */}
             <div className={styles.conatainerList}>
-              {/* Mapeo de la lista de héroes para mostrar cada héroe usando el componente CardHero */}
+              {/* Mapeo de la lista de empresas */}
               {filteredData.map((empre: Empresa) => (
                 <Card sx={{ maxWidth: 345 }}>
                   <CardMedia
