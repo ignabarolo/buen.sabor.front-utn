@@ -14,6 +14,7 @@ import LoginOutlinedIcon from '@mui/icons-material/LoginOutlined';
 import { Link } from 'react-router-dom';
 import "../../../../Styles/Variables.css";
 import Styles from "../Navbar/BaseNavbar.module.css";
+import { NavItem } from 'react-bootstrap';
 
 export default function PrimarySearchAppBar() {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -49,7 +50,7 @@ export default function PrimarySearchAppBar() {
       <MenuItem onClick={handleMenuClose}><div><Person2OutlinedIcon sx={{mr: 1, color: '#E66200'}}/></div>Perfil</MenuItem>
       <MenuItem onClick={handleMenuClose}><div><SettingsOutlinedIcon sx={{mr: 1, color:'#E66200}'}}/></div>Ajustes</MenuItem>
       <Divider/>
-      <MenuItem onClick={handleMenuClose}><div><LoginOutlinedIcon sx={{mr: 1, color: '#E66200'}}/></div>Cerrar Sesión</MenuItem>
+      <MenuItem onClick={handleMenuClose}><div><LoginOutlinedIcon sx={{mr: 1, color: '#E66200'}}/></div><Link to="/" style={{ textDecoration: "none", color: "inherit" }}>Cerrar Sesion</Link></MenuItem>
     </Menu>
   );
 
@@ -63,7 +64,7 @@ export default function PrimarySearchAppBar() {
             component="div"
             sx={{ justifyContent: 'center' }}
           >
-           <Link to="/" style={{ textDecoration: "none", color: "inherit" }}>Administrador</Link>
+           <NavItem style={{ textDecoration: "none", color: "inherit" }}>El Buen Sabor</NavItem>
 
           </Typography>
           <Box sx={{ flexGrow: 1 }} />
