@@ -17,16 +17,16 @@ const BasicSidebar: React.FC = () => {
                         Dashboard
                     </CNavTitle>
                     <CNavItem>
-                        <Link to="/" className="nav-link" >
+                        <Link to="dashboard/:sucursalId" className="nav-link" >
                             <CIcon customClassName="nav-icon" icon={cilBarChart} style={{ color: "#E66200" }} />
                             Inicio
                         </Link>
                     </CNavItem>
 
                     <CNavItem>
-                        <Link to="/empresas" className="nav-link">
+                        <Link to="/sucursales" className="nav-link">
                             <CIcon customClassName="nav-icon" icon={cilBuilding} style={{ color: "#E66200" }} />
-                            Empresas
+                            Sucursales
                         </Link>
                     </CNavItem>
                     <CNavGroup
