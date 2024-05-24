@@ -64,7 +64,7 @@ export default function PrimarySearchAppBar() {
             component="div"
             sx={{ justifyContent: 'center' }}
           >
-           <NavItem style={{ textDecoration: "none", color: "inherit" }}>El Buen Sabor</NavItem>
+           <NavItem style={{ textDecoration: "none", color: "inherit" }}><span className="material-symbols-outlined" style={{padding:3}}>fastfood</span>El Buen Sabor</NavItem>
 
           </Typography>
           <Box sx={{ flexGrow: 1 }} />
