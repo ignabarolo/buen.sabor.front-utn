@@ -98,6 +98,7 @@ const SucursalesEmpresa: React.FC = () => {
     console.log("Editar sucursal con ID:", sucursalId);
   };
   const handleAddSucursal = () => {
+    setIsEditing(false);
     dispatch(toggleModal({ modalName: "modal" }));
   };
 

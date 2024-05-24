@@ -186,7 +186,7 @@ const EmpresaComponent = () => {
                         <Visibility />
                       </IconButton>
                     </Tooltip>
-                    <Tooltip title="Ver Sucursales">
+                    <Tooltip title="Editar Sucursal">
                       <IconButton
                         onClick={handleAddEmpresa}
                         aria-label="Ver Sucursales"
@@ -194,7 +194,7 @@ const EmpresaComponent = () => {
                         <EditIcon />
                       </IconButton>
                     </Tooltip>
-                    <Tooltip title="Ver Sucursales">
+                    <Tooltip title="Eliminar sucursal">
                       <IconButton>
                         <DeleteIcon color="error" />
                       </IconButton>
