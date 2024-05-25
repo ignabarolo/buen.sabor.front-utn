@@ -25,6 +25,7 @@ const Rutas: React.FC = () => {
           <Route path="dashboard/:sucursalId" element={<Inicio />} />
           <Route path="/empresa/:empresaId" element={<SucursalesEmpresa />} />
           <Route path="productos/:sucursalId" element={<Producto />} />
+          <Route path="promociones/:sucursalId" element={<Producto />} />
           <Route path="categorias/:idSucursal" element={<Categoria />} />
           <Route path="insumos/:sucursalId" element={<Insumo />} />
           <Route path="/unidadMedida" element={<UnidadMedida />} />
