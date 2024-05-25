@@ -11,14 +11,14 @@ const productosContent = {
     url: "https://w6h5a5r4.rocketcdn.me/wp-content/uploads/2019/06/pizza-con-chorizo-jamon-y-queso-1080x671.jpg",
     title: "Productos",
     content:
-      "Añade nuevos platos o actualiza los precios para mejorar la experiencia de tus clientes.",
+      "Agrega productos novedosos, edita los precios y ten contentos a tus clientes.",
   };
 
   const promocionesContent = {
     url: "https://www.grandespymes.com.ar/wp-content/uploads/2020/07/promociones.jpg",
     title: "Promociones",
     content:
-      "Personaliza tus ofertas, haz que destaquen para que tus clientes no se resistan.",
+      "Genera promociones para tus distintas sucursales y atrae a nuevos clientes.",
   };
 
 const insumosContent = {
@@ -63,13 +63,13 @@ const Inicio: React.FC = () => {
 
                 <Grid container spacing={3} sx={{ py: 2, alignContent: 'center' , justifyContent: 'center' }}>
                     <Grid item xs={12} md={6}>
-                        <ChartCard title="Gráfico de Barras">
-                            <BaseBar />
+                        <ChartCard title="Gráfico de Pastel">
+                            <BasePie />
                         </ChartCard>
                     </Grid>
                     <Grid item xs={12} md={6}>
-                        <ChartCard title="Gráfico de Pastel">
-                            <BasePie />
+                        <ChartCard title="Gráfico de Barras">
+                            <BaseBar />
                         </ChartCard>
                     </Grid>
                 </Grid>

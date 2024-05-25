@@ -10,6 +10,7 @@ import Insumo from '../components/Screens/Insumo/Insumo';
 import Producto from '../components/Screens/Producto/Producto';
 import UnidadMedida from '../components/Screens/UnidadMedida/UnidadMedida';
 import Categoria from '../components/Screens/Categoria/Categoria';
+import SucursalesEmpresa from '../components/Screens/Sucursal/SucursalComponent';
 
 const Rutas: React.FC = () => {
   return (
@@ -22,10 +23,11 @@ const Rutas: React.FC = () => {
         <Route path="/empresa/:empresaId" element={<SucursalComponent />} />
           <Route element={<SidebarLayout />}>
           <Route path="dashboard/:sucursalId" element={<Inicio />} />
-          <Route path="insumos/:sucursalId" element={<Insumo />} />
+          <Route path="/empresa/:empresaId" element={<SucursalesEmpresa />} />
           <Route path="productos/:sucursalId" element={<Producto />} />
-          <Route path="/unidadMedida" element={<UnidadMedida />} />
           <Route path="categorias/:idSucursal" element={<Categoria />} />
+          <Route path="insumos/:sucursalId" element={<Insumo />} />
+          <Route path="/unidadMedida" element={<UnidadMedida />} />
         </Route>
       </Routes>
     </Router>
