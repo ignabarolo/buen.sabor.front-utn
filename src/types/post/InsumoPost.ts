@@ -1,7 +1,6 @@
 import IImagen from "../IImagen";
 
 
-
 export interface InsumoPost  {
     denominacion: string,
     precioVenta: number,

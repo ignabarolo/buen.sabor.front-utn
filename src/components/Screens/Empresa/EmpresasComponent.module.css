@@ -1,0 +1,10 @@
+.background {
+    background-color: var(--backgroundColor);
+    color: var(--button-text-color);
+}
+
+.color {
+    color: var(--backgroundColor);
+    border-color: var(--backgroundColor);
+}
+

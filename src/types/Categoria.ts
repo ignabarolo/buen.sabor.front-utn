@@ -1,9 +1,10 @@
 import DataModel from "./DataModel";
+import ISucursal from "./ISucursal";
 
-interface Categoria extends DataModel<Categoria>{
+
+export interface ICategoria extends DataModel<ICategoria> {
     denominacion: string,
-    articulos: [],
-    subCategorias: Categoria[]
-}
-
-export default Categoria;
+    esInsumo: boolean,
+    sucursales: ISucursal[]
+    subCategorias: ICategoria[];
+  }

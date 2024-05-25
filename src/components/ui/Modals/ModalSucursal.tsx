@@ -3,22 +3,23 @@ import * as Yup from 'yup';
 import GenericModal from '../../ui/Modals/GenericModal';
 import TextFieldValue from '../../ui/TextFieldValue/TextFieldValue';
 import SucursalService from '../../../services/SucursalService';
-import SucursalPost from '../../../types/post/SucursalPost';
-import { CheckCircleOutline, HighlightOff } from '@mui/icons-material';
-import EmpresaService from '../../../services/EmpresaService';
-import Sucursal from '../../../types/Sucursal';
+import Sucursal from '../../../types/ISucursal';
 import PaisService from '../../../services/PaisService';
 import ProvinciaService from '../../../services/ProvinciaService';
 import LocalidadService from '../../../services/LocalidadService';
-import Empresa from '../../../types/Empresa';
-import Pais from '../../../types/Pais';
 import SelectList from '../SelectList/SelectList';
-import Provincia from '../../../types/Provincia';
-import Localidad from '../../../types/Localidad';
+import ILocalidad from '../../../types/ILocalidad';
+import IProvincia from '../../../types/IProvincia';
+import IPais from '../../../types/IPais';
+import SucursalPost from '../../../types/post/SucursalPost';
+import ISucursal from '../../../types/ISucursal';
+import { CheckCircleOutline, HighlightOff } from '@mui/icons-material';
+import EmpresaService from '../../../services/EmpresaService';
+import IEmpresa from '../../../types/IEmpresa';
 
 interface ModalSucursalProps {
   modalName: string;
-  initialValues: SucursalPost | Sucursal;
+  initialValues: SucursalPost | ISucursal;
   isEditMode: boolean;
   getSucursales: Function;
   sucursalAEditar?: Sucursal;
@@ -43,10 +44,10 @@ const ModalSucursal: React.FC<ModalSucursalProps> = ({
   const localidadService = new LocalidadService();
   const empresaService = new EmpresaService();
 
-  const [empresa, setEmpresa] = useState<Empresa>()
+  const [empresa, setEmpresa] = useState<IEmpresa>()
   const [paises, setPaises] = useState<any[]>([]);
   const [provincias, setProvincias] = useState<any[]>([]);
-  const [localidades, setLocalidades] = useState<Localidad[]>([]);
+  const [localidades, setLocalidades] = useState<ILocalidad[]>([]);
 
   const [selectedPais, setSelectedPais] = useState<string>('');
   const [selectedProvincia, setSelectedProvincia] = useState<string>('');
@@ -54,7 +55,7 @@ const ModalSucursal: React.FC<ModalSucursalProps> = ({
   const [casaMatriz, setCasaMatriz] = useState<boolean>(false); // Estado para casa matriz
   const [provinciaNombre, setProvinciaNombre] = useState<string>('');
   const [localidadNombre, setLocalidadNombre] = useState<string>('');
-  const [tooltipMessage, setTooltipMessage] = useState<string>(''); // Mensaje para el tooltip
+  const [, setTooltipMessage] = useState<string>(''); // Mensaje para el tooltip
 
   const fetchEmpresa = async () => {
     try {
@@ -64,7 +65,6 @@ const ModalSucursal: React.FC<ModalSucursalProps> = ({
       console.error('Error al obtener la empresa:', error);
     }
   };
-
 
   const fetchPaises = async () => {
     try {
@@ -102,9 +102,6 @@ const ModalSucursal: React.FC<ModalSucursalProps> = ({
     horarioApertura: Yup.string().required('Campo requerido'),
     horarioCierre: Yup.string().required('Campo requerido'),
   });
-
-
-
 
   useEffect(() => {
     fetchEmpresa();
@@ -148,7 +145,7 @@ const ModalSucursal: React.FC<ModalSucursalProps> = ({
 
   // Función para verificar si la sucursal editada es casa matriz
   const checkCasaMatriz = () => {
-    const sucursal = initialValues as Sucursal;
+    const sucursal = initialValues as ISucursal;
     if (sucursal.esCasaMatriz) {
       setCasaMatriz(true);
     } else {
@@ -174,8 +171,6 @@ const ModalSucursal: React.FC<ModalSucursalProps> = ({
   const handleCasaMatrizChange = (event: ChangeEvent<HTMLInputElement>) => {
     setCasaMatriz(event.target.checked);
   };
-
-
 
   if (!isEditMode) {
     initialValues = {
@@ -240,11 +235,6 @@ const ModalSucursal: React.FC<ModalSucursalProps> = ({
     }
   };
 
-
-
-
-
-
   return (
     <GenericModal
       modalName={modalName}
@@ -290,7 +280,7 @@ const ModalSucursal: React.FC<ModalSucursalProps> = ({
           <div style={{ flex: 1 }}>
             <SelectList
               title="Países"
-              items={paises.map((pais: Pais) => pais.nombre)}
+              items={paises.map((pais: IPais) => pais.nombre)}
               handleChange={handlePaisChange}
               selectedValue={selectedPais}
               disabled={isEditMode}
@@ -300,9 +290,8 @@ const ModalSucursal: React.FC<ModalSucursalProps> = ({
             {selectedPais && (
               <SelectList
                 title="Provincias"
-                items={provincias.map((provincia: Provincia) => provincia.nombre)}
+                items={provincias.map((provincia: IProvincia) => provincia.nombre)}
                 handleChange={handleProvinciaChange}
-                //selectedValue={selectedProvincia}
                 selectedValue={provinciaNombre}
                 disabled={isEditMode}
               />
@@ -312,9 +301,8 @@ const ModalSucursal: React.FC<ModalSucursalProps> = ({
             {selectedProvincia && (
               <SelectList
                 title="Localidades"
-                items={localidades.map((localidad: Localidad) => localidad.nombre)}
+                items={localidades.map((localidad: ILocalidad) => localidad.nombre)}
                 handleChange={handleLocalidadChange}
-                //selectedValue={selectedLocalidad}
                 selectedValue={localidadNombre}
                 disabled={isEditMode}
               />
@@ -338,9 +326,9 @@ const ModalSucursal: React.FC<ModalSucursalProps> = ({
           <h3 style={{ fontSize: '1.2rem' }}>Casa Matriz</h3>
         </label>
 
-        {(!isEditMode && casaMatrizDisabled) || (isEditMode && !casaMatriz) ? (
+        {(casaMatrizDisabled && !isEditMode) || (casaMatrizDisabled && isEditMode && !casaMatriz) ? (
           <div style={{ fontSize: '1.1rem', color: 'red' }}>
-            {tooltipMessage}
+            Ya hay una sucursal que es casa matriz
           </div>
         ) : null}
       </div>

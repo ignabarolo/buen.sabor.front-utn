@@ -9,9 +9,12 @@ import Menu from '@mui/material/Menu';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import Person2OutlinedIcon from '@mui/icons-material/Person2Outlined';
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
-import LunchDiningOutlinedIcon from '@mui/icons-material/LunchDiningOutlined';
 import Divider from '@mui/material/Divider';
 import LoginOutlinedIcon from '@mui/icons-material/LoginOutlined';
+import { Link } from 'react-router-dom';
+import "../../../../Styles/Variables.css";
+import Styles from "../Navbar/BaseNavbar.module.css";
+import { NavItem } from 'react-bootstrap';
 
 export default function PrimarySearchAppBar() {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -44,16 +47,16 @@ export default function PrimarySearchAppBar() {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}><div><Person2OutlinedIcon sx={{mr: 1}} style={{color:"#E66200"}}/></div>Perfil</MenuItem>
-      <MenuItem onClick={handleMenuClose}><div><SettingsOutlinedIcon sx={{mr: 1}} style={{color:"#E66200"}} /></div>Ajustes</MenuItem>
+      <MenuItem onClick={handleMenuClose}><div><Person2OutlinedIcon sx={{mr: 1, color: '#E66200'}}/></div>Perfil</MenuItem>
+      <MenuItem onClick={handleMenuClose}><div><SettingsOutlinedIcon sx={{mr: 1, color:'#E66200}'}}/></div>Ajustes</MenuItem>
       <Divider/>
-      <MenuItem onClick={handleMenuClose}><div><LoginOutlinedIcon sx={{mr: 1}} style={{color:"#E66200"}} /></div>Cerrar Sesión</MenuItem>
+      <MenuItem onClick={handleMenuClose}><div><LoginOutlinedIcon sx={{mr: 1, color: '#E66200'}}/></div><Link to="/" style={{ textDecoration: "none", color: "inherit" }}>Cerrar Sesion</Link></MenuItem>
     </Menu>
   );
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static" sx={{bgcolor: '#E66200'}}>
+      <AppBar position="static" sx={{background: "#E66200"}}>
         <Toolbar>
           <Typography
             variant="h6"
@@ -61,8 +64,8 @@ export default function PrimarySearchAppBar() {
             component="div"
             sx={{ justifyContent: 'center' }}
           >
-            <LunchDiningOutlinedIcon sx={{mr: 1}}/>
-            Buen Sabor
+           <NavItem style={{ textDecoration: "none", color: "inherit" }}><span className="material-symbols-outlined" style={{padding:3}}>fastfood</span>El Buen Sabor</NavItem>
+
           </Typography>
           <Box sx={{ flexGrow: 1 }} />
           <IconButton

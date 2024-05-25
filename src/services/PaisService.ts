@@ -1,5 +1,5 @@
 
-import Pais from "../types/Pais";
+import IPais from "../types/IPais";
 import  BackendClient  from "./BackendClient";
 
-export default class PaisService extends BackendClient<Pais> {}
+export default class PaisService extends BackendClient<IPais> {}

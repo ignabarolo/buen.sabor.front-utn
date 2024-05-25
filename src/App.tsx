@@ -1,13 +1,17 @@
 import { Provider } from "react-redux";
+import Rutas from "./routes/Routes";
 import { store } from "./redux/store/store";
-import AppRouter from "./routes/AppRouter";
 
-const App = () => {
+function App() {
+
+
   return (
-    <Provider store={store}>
-      <AppRouter />
-    </Provider>
-  );
-};
 
-export default App;
+    <Provider store={store}>
+    <Rutas />
+  </Provider>
+  
+  );
+}
+
+export default App
