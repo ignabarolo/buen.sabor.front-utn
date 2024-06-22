@@ -21,6 +21,7 @@ import "../../../Styles/Variables.css";
 import Styles from "../Empresa/EmpresasComponent.module.css";
 
 const EmpresaComponent: React.FC = () => {
+    var sucursalId = localStorage.clear();
     const url = import.meta.env.VITE_API_URL;
     const dispatch = useAppDispatch();
     const empresaService = new EmpresaService();

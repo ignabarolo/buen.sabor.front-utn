@@ -17,6 +17,8 @@ import SimpleCategoriaAccordion from '../../ui/accordion/CategoriaAccordion';
 
 const Categoria: React.FC = () => {
     const url = import.meta.env.VITE_API_URL;
+    let sucursalIdJSON = localStorage.getItem("sucursalId");
+    let sucursalId =  sucursalIdJSON ? JSON.parse(sucursalIdJSON) : '';
     const dispatch = useAppDispatch();
     const globalCategorias = useAppSelector((state) => state.categoria.data);
     const { idSucursal } = useParams<{ idSucursal: string }>();
@@ -34,7 +36,7 @@ const Categoria: React.FC = () => {
         try {
             setIsLoading(true);
             if (idSucursal !== undefined) {
-                const categorias = await sucursalService.get(`${url}/sucursal/getCategorias`, parseInt(idSucursal)) as any;
+                const categorias = await sucursalService.get(`${url}/sucursal/getCategorias`, parseInt(sucursalId)) as any;
                 dispatch(setCategoria(categorias));
                 setFilteredData(categorias);
             }

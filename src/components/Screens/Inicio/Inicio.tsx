@@ -8,21 +8,21 @@ import { useParams } from "react-router-dom";
 
 // Contenido para las tarjetas de inicio
 const productosContent = {
-    url: "https://w6h5a5r4.rocketcdn.me/wp-content/uploads/2019/06/pizza-con-chorizo-jamon-y-queso-1080x671.jpg",
+    url: "https://th.bing.com/th/id/OIP.BBfUDWMDYaLU2zBpcvDxfQHaE7?rs=1&pid=ImgDetMain",
     title: "Productos",
     content:
       "Agrega productos novedosos, edita los precios y ten contentos a tus clientes.",
   };
 
   const promocionesContent = {
-    url: "https://www.grandespymes.com.ar/wp-content/uploads/2020/07/promociones.jpg",
+    url: "https://d2vr64fd62ajh5.cloudfront.net/img/blog/1xq-plantillas-2x1-dos-por-uno-ofertas-editable-online.jpg",
     title: "Promociones",
     content:
       "Genera promociones para tus distintas sucursales y atrae a nuevos clientes.",
   };
 
 const insumosContent = {
-    url: 'https://revistamj.com/wp-content/uploads/2020/08/278_FoodStorage101_Hero_2X-980x461.jpg',
+    url: 'https://th.bing.com/th/id/OIP.eTpdhsggPLvbFK1WKCWOfwHaE8?rs=1&pid=ImgDetMain',
     title: 'Insumos',
     content: 'Agrega, actualiza o elimina los insumos de tu sucursal'
 };
@@ -37,6 +37,7 @@ const cardStyle = {
 //Renderización del componente
 const Inicio: React.FC = () => {
     const { sucursalId } = useParams<{ sucursalId: string }>();
+    localStorage.setItem("sucursalId", JSON.stringify(sucursalId));
     const id = sucursalId || '';
     return (
         <Box component="main" sx={{ flexGrow: 1, pt: 10}}>

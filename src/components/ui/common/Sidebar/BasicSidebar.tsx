@@ -1,18 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { cilBarChart, cilCart, cilFastfood, cilPeople, cilDollar, cilSpeedometer  } from "@coreui/icons";
+import { cilBarChart, cilCart, cilFastfood, cilPeople, cilDollar, cilSpeedometer, cilSpreadsheet  } from "@coreui/icons";
 import CIcon from "@coreui/icons-react";
 import { CNavGroup, CNavItem, CNavTitle, CSidebar, CSidebarNav } from "@coreui/react";
 import '@coreui/coreui/dist/css/coreui.min.css';
 import SucursalService from '../../../../services/SucursalService';
 import ISucursal from '../../../../types/ISucursal';
 import "../../../../Styles/Variables.css";
-import styles from "./BasicSidebar.module.css";
-import { colors } from '@mui/material';
 import EmpresaService from '../../../../services/EmpresaService';
+import DescriptionIcon from '@mui/icons-material/Description';
 
 const BasicSidebar: React.FC = () => {
     const { sucursalId } = useParams<{ sucursalId: string }>();
+    let sucursalIdJSON = localStorage.getItem("sucursalId");
+    let sucursalIdStorage =  sucursalIdJSON ? JSON.parse(sucursalIdJSON) : '';
     const [sucursalNombre, setSucursalNombre] = useState<string>('');
     const [empresaNombre, setEmpresaNombre] = useState<string>('');
     const url = import.meta.env.VITE_API_URL;
@@ -24,7 +25,7 @@ const BasicSidebar: React.FC = () => {
         const fetchSucursalYEmpresaNombre = async () => {
             try {
                 if (sucursalId) {
-                    const sucursal = await sucursalService.get(`${url}/sucursal`, parseInt(sucursalId));
+                    const sucursal = await sucursalService.get(`${url}/sucursal`, parseInt(sucursalIdStorage));
                     setSucursalNombre(sucursal.nombre);
 
                     if ('empresa' in sucursal) {
@@ -131,6 +132,18 @@ const BasicSidebar: React.FC = () => {
                         <Link to={`/unidadMedida`} className="nav-link">
                             <CIcon customClassName="nav-icon" icon={cilSpeedometer} style={{color:'#E66200'}}/>
                             Unidad de Medida
+                        </Link>
+                    </CNavItem>
+                    <CNavItem>
+                        <Link to={`/CardsProducto`} className="nav-link">
+                            <CIcon customClassName="nav-icon" icon={cilFastfood} style={{color:'#E66200'}}/>
+                            Cards Productos
+                        </Link>
+                    </CNavItem>
+                    <CNavItem>
+                        <Link to={`/Pedidos`} className="nav-link">
+                            <CIcon customClassName="nav-icon" icon={cilSpreadsheet} style={{color:'#E66200'}}/>
+                            Pedidos
                         </Link>
                     </CNavItem>
 
